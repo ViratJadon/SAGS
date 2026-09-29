@@ -1,0 +1,2174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PlantoAnalytica</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230067b8'/%3E%3Cpath d='M16 6C16 13 11 15 8 16C8 10 11 7 16 6Z' fill='%23ffffff'/%3E%3Cpath d='M16 11C18 16 23 17 25 18C25 13 22 11 16 11Z' fill='%237FBA00'/%3E%3Cpath d='M16 6V26' stroke='%23ffffff' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+</head>
+<body class="win11-theme">
+  <div class="window-shell">
+    <!-- Top Titlebar -->
+    <header class="titlebar">
+      <div class="titlebar-left">
+        <div class="app-logo">
+          <!-- PlantoAnalytica Fluent Leaf & Analytics Icon -->
+          <svg class="store-icon" viewBox="0 0 32 32" width="20" height="20" fill="none">
+            <rect width="32" height="32" rx="7" fill="#0067b8" />
+            <path d="M16 6C16 13 11 15 8 16C8 10 11 7 16 6Z" fill="#ffffff" opacity="0.95"/>
+            <path d="M16 11C18 16 23 17 25 18C25 13 22 11 16 11Z" fill="#7FBA00"/>
+            <path d="M16 6V26" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="21" cy="22" r="2.5" fill="#FFB900" />
+          </svg>
+          <span class="titlebar-title">PlantoAnalytica</span>
+        </div>
+      </div>
+
+      <div class="titlebar-center">
+        <div class="search-box" id="searchBox">
+          <svg class="search-icon" viewBox="0 0 20 20" width="14" height="14">
+            <path fill="currentColor" fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 3.376 9.81l3.657 3.657a.75.75 0 1 0 1.06-1.06l-3.656-3.658A5.5 5.5 0 0 0 9 3.5zM4.5 9a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0z"/>
+          </svg>
+          <input type="text" id="searchInput" placeholder="Search crops, plants, sensors, fields..." autocomplete="off" spellcheck="false" />
+          <div class="search-dropdown" id="searchDropdown">
+            <div class="search-dropdown-title">Quick crop selection</div>
+            <div class="search-item" data-plant="potato">
+              <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><circle cx="8" cy="8" r="6" fill="#d97706"/></svg>
+              <span>Potato (Solanum tuberosum)</span>
+            </div>
+            <div class="search-item" data-plant="chili">
+              <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><circle cx="8" cy="8" r="6" fill="#dc2626"/></svg>
+              <span>Chili (Capsicum annuum)</span>
+            </div>
+            <div class="search-item" data-plant="basil">
+              <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><circle cx="8" cy="8" r="6" fill="#16a34a"/></svg>
+              <span>Basil - Tulsi (Ocimum tenuiflorum)</span>
+            </div>
+            <div class="search-item" data-plant="spinach">
+              <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><circle cx="8" cy="8" r="6" fill="#15803d"/></svg>
+              <span>Spinach (Spinacia oleracea)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="titlebar-right">
+        <!-- Arduino Hardware Connection Pill -->
+        <button class="arduino-status-pill" id="btnHeaderArduino" title="Arduino Smart Gardening Array (Web Serial 9600 baud)">
+          <span class="arduino-status-dot disconnected" id="arduinoStatusDot"></span>
+          <span id="arduinoStatusText">No Arduino detected</span>
+        </button>
+        <!-- Sound Chimes Toggle -->
+        <button class="titlebar-tool-btn active" id="btnToggleSound" title="Toggle Fluent Chimes & Audio Alerts">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" id="soundIcon">
+            <path d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.47 8.47 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z"/>
+            <path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.482 5.482 0 0 1 11.025 8a5.482 5.482 0 0 1-1.61 3.89l.706.706z"/>
+            <path d="M8.707 11.182A4.486 4.486 0 0 0 10.025 8a4.486 4.486 0 0 0-1.318-3.182L8 5.525A3.489 3.489 0 0 1 9.025 8 3.49 3.49 0 0 1 8 10.475l.707.707zM6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z"/>
+          </svg>
+        </button>
+        <div class="user-avatar" id="fieldAvatarBtn" title="Current Field: Click to rename">
+          <span>FA</span>
+        </div>
+        <div class="window-controls">
+          <button class="win-btn win-min" title="Minimize" id="winMinBtn">
+            <svg width="10" height="1" viewBox="0 0 10 1"><rect width="10" height="1" fill="currentColor"/></svg>
+          </button>
+          <button class="win-btn win-max" title="Maximize" id="winMaxBtn">
+            <svg width="10" height="10" viewBox="0 0 10 10"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+          </button>
+          <button class="win-btn win-close" title="Close" id="winCloseBtn">
+            <svg width="10" height="10" viewBox="0 0 10 10"><path d="M0 0 L10 10 M10 0 L0 10" stroke="currentColor" stroke-width="1.2"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main App Layout: Left Rail + Scrollable Content View -->
+    <div class="app-body">
+      <!-- Left Navigation Rail with Unfilled / Filled Icons -->
+      <nav class="nav-rail" id="navRail">
+        <div class="nav-indicator" id="navIndicator"></div>
+        <div class="nav-group-top">
+          <!-- 1. Home -->
+          <button class="nav-item active" data-nav="home" title="Home">
+            <div class="nav-icon-wrap">
+              <!-- Unfilled / Outline Icon -->
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon-unfilled">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+              <!-- Filled / Solid Icon -->
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" class="nav-icon-filled">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              </svg>
+            </div>
+            <span class="nav-label">Home</span>
+          </button>
+
+          <!-- 2. Plants -->
+          <button class="nav-item" data-nav="plants" title="Plants">
+            <div class="nav-icon-wrap">
+              <!-- Unfilled / Outline Icon -->
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon-unfilled">
+                <path d="M7 20h10"/><path d="M10 20c0-7 3-7 3-14"/><path d="M4 14c4 0 6-3 6-7-4 0-6 3-6 7z"/><path d="M20 10c-4 0-6-3-6-7 4 0 6 3 6 7z"/>
+              </svg>
+              <!-- Filled / Solid Icon -->
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" class="nav-icon-filled">
+                <path d="M12 3c0 4-2 7-6 7 0-4 2-7 6-7zm2 4c0 4 2 7 6 7 0-4-2-7-6-7zm-1 9c0-3.5-1.5-6-3-8-1.5 2-3 4.5-3 8h2v4h2v-4h2z"/>
+              </svg>
+            </div>
+            <span class="nav-label">Plants</span>
+          </button>
+
+          <!-- 3. Fields (Renamed from History) -->
+          <button class="nav-item" data-nav="fields" title="Fields">
+            <div class="nav-icon-wrap">
+              <!-- Unfilled / Outline Icon -->
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon-unfilled">
+                <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                <line x1="3" y1="9" x2="21" y2="9"></line>
+                <line x1="3" y1="15" x2="21" y2="15"></line>
+                <line x1="9" y1="3" x2="9" y2="21"></line>
+                <line x1="15" y1="3" x2="15" y2="21"></line>
+              </svg>
+              <!-- Filled / Solid Icon -->
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" class="nav-icon-filled">
+                <path d="M4 3h16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm4 7V5H4v5h4zm2 0h4V5h-4v5zm6 0h4V5h-4v5zm4 2h-4v4h4v-4zm-6 0h-4v4h4v-4zm-6 0H4v4h4v-4zm-4 6v1h4v-1H4zm6 1h4v-1h-4v1zm6 0h4v-1h-4v1z"/>
+              </svg>
+            </div>
+            <span class="nav-label">Fields</span>
+          </button>
+
+          <!-- 4. Settings -->
+          <button class="nav-item" data-nav="settings" title="Settings">
+            <div class="nav-icon-wrap">
+              <!-- Unfilled / Outline Icon -->
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon-unfilled">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+              <!-- Filled / Solid Icon -->
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" class="nav-icon-filled">
+                <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+              </svg>
+            </div>
+            <span class="nav-label">Settings</span>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Scrollable Main Viewport -->
+      <main class="content-viewport" id="contentViewport">
+
+        <!-- Sticky Floating Compact Header Dock (Zero-height sticky anchor at viewport level) -->
+        <div class="sticky-dock-wrapper" id="stickyDockWrapper">
+          <div class="sticky-compact-header" id="stickyHeader" aria-hidden="true">
+            <div class="sticky-header-content">
+              <div class="sticky-app-info">
+                <!-- Small Plant Thumbnail -->
+                <div class="sticky-icon-wrapper">
+                  <img src="assets/plants/potato.jpg" alt="Selected Crop" class="sticky-plant-img" id="stickyPlantImg" />
+                </div>
+                <div class="sticky-text-wrap">
+                  <h2 class="sticky-app-title" id="stickyPlantTitle">Potato</h2>
+                  <div class="sticky-app-developer" id="stickyPlantDeveloper">Solanum tuberosum • Field Alpha</div>
+                </div>
+              </div>
+
+              <div class="sticky-actions-wrap">
+                <button class="open-paint-btn sticky-monitor-field-btn" id="stickyMonitorFieldBtn" title="Launch precision telemetry monitor for the selected field">
+                  <svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor" style="margin-right: 6px;">
+                    <path d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                  </svg>
+                  <span>MONITOR FIELD</span>
+                </button>
+                <a href="#change-crop" class="parental-link" id="stickyChangeCropLink">Change Crop</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plant Detail View (Home) -->
+        <div class="view-pane active" id="homeView">
+          <!-- Hero Header Area (Expanded State) -->
+          <div class="hero-section" id="heroSection">
+          <div class="hero-backdrop-gradient"></div>
+          <div class="hero-container">
+            
+            <!-- Field Selection Strip on Main Page -->
+            <div class="main-field-selector-strip" id="mainFieldSelectorStrip">
+              <span class="main-field-sel-label">Selected Field:</span>
+              <div class="main-field-chips-wrap" id="mainFieldChipsList">
+                <!-- Dynamically populated: e.g. [● Field Alpha (Active)] [Field Beta] -->
+              </div>
+            </div>
+
+            <!-- 1. Top Row: Plant Icon + Crop Meta (Title, Species, Ratings) -->
+            <div class="hero-top-row">
+              <div class="app-icon-container" id="heroIconContainer">
+                <img src="assets/plants/potato.jpg" alt="Selected Plant" class="hero-plant-img" id="heroPlantImg" />
+              </div>
+
+              <!-- App Details Beside Icon -->
+              <div class="app-meta-col">
+                <h1 class="app-title" id="heroPlantTitle">Potato</h1>
+                <div style="display:flex; align-items:center; gap:8px; margin: 3px 0 6px;">
+                  <span class="developer-link" id="heroPlantSpecies" style="font-size:14px; font-style:italic;">Solanum tuberosum</span>
+                  <span class="meta-pipe">|</span>
+                  <span class="field-badge-indicator" id="heroFieldBadge">Field: <strong>Field Alpha</strong></span>
+                </div>
+                <div class="ratings-meta-row">
+                  <span class="rating-score" id="heroRatingScore">4.8</span>
+                  <span class="rating-star">★</span>
+                  <span class="rating-count" id="heroRatingCount">12.4K agronomist ratings</span>
+                  <span class="meta-pipe">|</span>
+                  <span class="category-link" id="heroCategory">Root & Tuber Crop</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Feature Badges (Aligned with Left Edge of App Icon) -->
+            <div class="feature-badges-row">
+              <div class="feature-badge" id="badgeMoisture">
+                <svg viewBox="0 0 20 20" width="16" height="16" fill="#0078D4">
+                  <path d="M10 2.5C10 2.5 4 10 4 14a6 6 0 0 0 12 0c0-4-6-11.5-6-11.5z"/>
+                </svg>
+                <span id="badgeMoistureText">Optimal Moisture: 65% - 78%</span>
+              </div>
+
+              <div class="feature-badge" id="badgeTemp">
+                <svg viewBox="0 0 20 20" width="16" height="16" fill="#dc2626">
+                  <path d="M10 2a2 2 0 0 0-2 2v7.17A4 4 0 1 0 12 11.17V4a2 2 0 0 0-2-2zm0 13a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
+                </svg>
+                <span id="badgeTempText">Optimal Temp: 16°C - 22°C</span>
+              </div>
+
+              <div class="feature-badge" id="badgeCycle">
+                <svg viewBox="0 0 20 20" width="16" height="16" fill="#107c41">
+                  <path d="M10 3a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17h8v-1.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7z"/>
+                </svg>
+                <span id="badgeCycleText">Growth Cycle: 100 days</span>
+              </div>
+
+              <!-- Live Streaming Hardware Badge -->
+              <div class="feature-badge live-telemetry-badge disconnected" id="badgeLiveArduino">
+                <span class="ribbon-pulse-dot"></span>
+                <span id="badgeLiveArduinoText">No Arduino detected</span>
+              </div>
+            </div>
+
+            <!-- 3. Snippet Description (Aligned with Left Edge of App Icon) -->
+            <p class="hero-description" id="heroPlantDescription">
+              Potatoes thrive in cool, porous soil. Soil moisture below 60% during tuber initiation causes irregular knobbing and reduced tuber count, while saturation (>85%) causes blackheart and soft rot.
+            </p>
+
+            <!-- 4. Actions row (Aligned with Left Edge of App Icon) -->
+            <div class="hero-actions-row">
+              <button class="open-paint-btn hero-monitor-field-btn" id="btnMainMonitorField" title="Launch precision telemetry monitor for the selected field">
+                <svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor" style="margin-right: 8px;">
+                  <path d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                </svg>
+                <span>MONITOR FIELD</span>
+              </button>
+              <button class="btn-subtle hero-bluetooth-btn" id="btnHeroBluetoothConnect" title="Connect wirelessly via HC-02 Bluetooth (BLE 4.0)">
+                <svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor">
+                  <path d="m8.5 7.5-2.25-2.25.707-.707L8.5 6.086V2.5a.5.5 0 0 1 .854-.354l3.5 3.5a.5.5 0 0 1 0 .708L9.5 9.707v1.586l3.354 3.354a.5.5 0 0 1 0 .708l-3.5 3.5A.5.5 0 0 1 8.5 18.5v-3.586l-1.543 1.543-.707-.707L8.5 13.5v-6zm1-3.293v3.586l1.793-1.793L9.5 4.207zm0 12.586 1.793-1.793L9.5 13.207v3.586z"/>
+                </svg>
+                <span id="heroBluetoothBtnText">Connect Bluetooth (HC-02)</span>
+              </button>
+              <button class="btn-subtle hero-arduino-btn" id="btnHeroArduinoConnect" title="Connect Arduino Smart Gardening System via USB / Bluetooth COM Port">
+                <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+                  <path d="M6 .5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4H6v-4zM4 6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2.5a.5.5 0 0 1-1 0V6a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h1v1H6a2 2 0 0 1-2-2V6zm5 7.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2z"/>
+                </svg>
+                <span id="heroArduinoBtnText">Connect USB / COM</span>
+              </button>
+              <button class="btn-subtle hero-wiring-btn" id="btnHeroWiringGuide" title="View HC-02 6-Pin Bluetooth Pinout, Wiring Schematics & Arduino Code">
+                <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+                  <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
+                  <path d="M8.646 6.646a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L10.293 9 8.646 7.354a.5.5 0 0 1 0-.708zm-1.292 0a.5.5 0 0 0-.708 0l-2 2a.5.5 0 0 0 0 .708l2 2a.5.5 0 0 0 .708-.708L5.707 9l1.647-1.646a.5.5 0 0 0 0-.708z"/>
+                </svg>
+                <span>Wiring &amp; Code</span>
+              </button>
+              <button class="btn-subtle hero-sync-btn" id="btnHeroQuickSync" title="Sync live Arduino sensor data immediately">
+                <svg viewBox="0 0 16 16" width="30" height="30" fill="currentColor" id="heroSyncIcon">
+                  <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                </svg>
+                <span></span>
+              </button>
+              <button class="btn-icon share-btn" id="btnSwitchCrop" title="Switch Plant Selection">
+                <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor">
+                  <path d="M4 7h11l-3-3 1.4-1.4L18.8 8l-5.4 5.4L12 12l3-3H4V7zm12 6H5l3 3-1.4 1.4L1.2 12l5.4-5.4L8 8l-3 3h11v2z"/>
+                </svg>
+              </button>
+            </div>
+
+            <!-- 5. Quick Switch Crop Link -->
+            <div class="parental-info-row">
+              <a href="#change-crop" class="parental-link" id="heroChangeCropLink">Browse 10 Foundation Crops</a>
+            </div>
+
+            <!-- 6. Realtime Field Weather Station Box -->
+            <div class="hero-weather-card age-rating-card" id="heroWeatherCard" title="Realtime Field Weather Station • Click to sync Google Weather">
+              <div class="weather-icon-badge" id="heroWeatherIconBox">
+                <img class="weather-google-icon" id="heroWeatherGoogleIcon" src="https://maps.gstatic.com/weather/v1/partly_cloudy_day.svg" alt="Google Weather" style="display: none;" />
+                <span class="weather-emoji" id="heroWeatherEmoji">⛅</span>
+                <span class="weather-temp-badge" id="heroWeatherTemp">26°C</span>
+              </div>
+              <div class="weather-meta-text">
+                <div class="weather-primary-row">
+                  <span class="weather-condition-text" id="heroWeatherCondition">Partly Cloudy</span>
+                  <span class="weather-live-dot" title="Live Meteorological Radar Active"></span>
+                </div>
+                <div class="weather-secondary-details" id="heroWeatherSecondary">
+                  <span class="weather-loc-btn" id="btnHeroUseLocation" role="button" tabindex="0" title="Click to use device location to get current location">
+                    <span class="gps-icon-tiny">📍</span>
+                    <span id="heroWeatherLocation">Agra • Field Alpha</span>
+                  </span>
+                  <span class="weather-pipe">•</span>
+                  <span id="heroWeatherHumidity">💧 96%</span>
+                  <span class="weather-pipe">•</span>
+                  <span id="heroWeatherWind">💨 6.4 km/h</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Live Arduino Telemetry & Actuator Station Banner (Home View) -->
+        <div class="home-arduino-ribbon" id="homeArduinoRibbon">
+          <div class="ribbon-header-row">
+            <div class="ribbon-title-wrap">
+              <span class="ribbon-pulse-dot"></span>
+              <span class="ribbon-title">LIVE ARDUINO CONTROLLER TELEMETRY</span>
+              <span class="ribbon-baud-tag">9600 BAUD • CYCLE: 5000MS</span>
+              <span class="ribbon-field-tag" id="homeRibbonFieldTag">Field Alpha • Node Uno</span>
+            </div>
+            <div class="ribbon-actions-right">
+              <span class="ribbon-timestamp" id="homeRibbonTimestamp">Synced Just now</span>
+              <button type="button" class="btn-ribbon-action" id="btnHomeQuickPump1" title="Send serial command '1' to manually pulse Pump 1">
+                ⚡ Pulse Pump 1
+              </button>
+              <button type="button" class="btn-ribbon-action" id="btnHomeQuickPump2" title="Send serial command '2' to manually pulse Pump 2">
+                ⚡ Pulse Pump 2
+              </button>
+              <button type="button" class="btn-ribbon-action" id="btnHomeQuickPump3" title="Send serial command '3' to manually pulse Pump 3">
+                ⚡ Pulse Pump 3
+              </button>
+              <button type="button" class="btn-ribbon-action" id="btnHomeWiringGuide" title="Open HC-02 6-Pin Bluetooth Pinout, Wiring Diagram & Complete Arduino Source Code">
+                📋 Wiring &amp; Code
+              </button>
+              <button type="button" class="btn-ribbon-action" id="btnToggleTestBench" title="Open interactive sensor simulator & ADC calibration bench">
+                ⚙️ Test Bench
+              </button>
+              <button type="button" class="btn-ribbon-action" id="btnExportTelemetry" title="Export sensor telemetry log as CSV">
+                📥 Export Log
+              </button>
+              <button type="button" class="btn-ribbon-action primary" id="btnHomeOpenMonitor">
+                Open Precision Monitor ↗
+              </button>
+            </div>
+          </div>
+
+          <!-- 5 Dynamic Metric Tiles with Sparkline Waveforms -->
+          <div class="ribbon-tiles-grid">
+            <!-- Tile 1: Soil 1 -->
+            <div class="ribbon-tile" id="ribbonTileSoil1">
+              <div class="ribbon-tile-top">
+                <span class="ribbon-tile-label">SOIL 1 (UPPER RHIZOSPHERE)</span>
+                <span class="ribbon-pin-chip analog">Pin A0</span>
+              </div>
+              <div class="ribbon-tile-main">
+                <span class="ribbon-val" id="homeLiveSoil1">--</span><span class="ribbon-unit">%</span>
+                <span class="ribbon-status warning" id="homeSoil1Status">No Arduino detected</span>
+              </div>
+              <!-- Live Dynamic Waveform Sparkline -->
+              <div class="ribbon-sparkline-wrap">
+                <svg class="sparkline-svg" id="sparklineSoil1" viewBox="0 0 100 24" preserveAspectRatio="none">
+                  <path class="sparkline-area" id="sparklineSoil1Area" d="M0,24 L100,24 Z" />
+                  <path class="sparkline-line" id="sparklineSoil1Line" d="M0,12 L100,12" />
+                </svg>
+              </div>
+              <div class="ribbon-tile-track">
+                <div class="ribbon-fill fill-soil1" id="homeSoil1Bar" style="width: 0%;"></div>
+              </div>
+              <div class="ribbon-tile-sub">Threshold: &lt; 40% (Pump 1 Auto &amp; Manual)</div>
+            </div>
+
+            <!-- Tile 2: Soil 2 -->
+            <div class="ribbon-tile" id="ribbonTileSoil2">
+              <div class="ribbon-tile-top">
+                <span class="ribbon-tile-label">SOIL 2 (DEEP TAPROOT)</span>
+                <span class="ribbon-pin-chip analog">Pin A1</span>
+              </div>
+              <div class="ribbon-tile-main">
+                <span class="ribbon-val" id="homeLiveSoil2">--</span><span class="ribbon-unit">%</span>
+                <span class="ribbon-status warning" id="homeSoil2Status">No Arduino detected</span>
+              </div>
+              <!-- Live Dynamic Waveform Sparkline -->
+              <div class="ribbon-sparkline-wrap">
+                <svg class="sparkline-svg" id="sparklineSoil2" viewBox="0 0 100 24" preserveAspectRatio="none">
+                  <path class="sparkline-area" id="sparklineSoil2Area" d="M0,24 L100,24 Z" />
+                  <path class="sparkline-line" id="sparklineSoil2Line" d="M0,12 L100,12" />
+                </svg>
+              </div>
+              <div class="ribbon-tile-track">
+                <div class="ribbon-fill fill-soil2" id="homeSoil2Bar" style="width: 0%;"></div>
+              </div>
+              <div class="ribbon-tile-sub">Threshold: &lt; 40% (Pump 2 Auto &amp; Manual)</div>
+            </div>
+
+            <!-- Tile 3: Canopy Temp -->
+            <div class="ribbon-tile" id="ribbonTileTemp">
+              <div class="ribbon-tile-top">
+                <span class="ribbon-tile-label">CANOPY TEMP</span>
+                <span class="ribbon-pin-chip digital">DHT11 Pin 4</span>
+              </div>
+              <div class="ribbon-tile-main">
+                <span class="ribbon-val" id="homeLiveTemp">--</span><span class="ribbon-unit">°C</span>
+                <span class="ribbon-status warning" id="homeTempStatus">No Arduino detected</span>
+              </div>
+              <!-- Live Dynamic Waveform Sparkline -->
+              <div class="ribbon-sparkline-wrap">
+                <svg class="sparkline-svg" id="sparklineTemp" viewBox="0 0 100 24" preserveAspectRatio="none">
+                  <path class="sparkline-area" id="sparklineTempArea" d="M0,24 L100,24 Z" />
+                  <path class="sparkline-line" id="sparklineTempLine" d="M0,12 L100,12" />
+                </svg>
+              </div>
+              <div class="ribbon-tile-track">
+                <div class="ribbon-fill fill-temp" id="homeTempBar" style="width: 0%;"></div>
+              </div>
+              <div class="ribbon-tile-sub" id="homeTempTarget">Optimal: 16°C – 22°C</div>
+            </div>
+
+            <!-- Tile 4: Canopy Humidity -->
+            <div class="ribbon-tile" id="ribbonTileHumidity">
+              <div class="ribbon-tile-top">
+                <span class="ribbon-tile-label">RELATIVE HUMIDITY</span>
+                <span class="ribbon-pin-chip digital">DHT11 Pin 4</span>
+              </div>
+              <div class="ribbon-tile-main">
+                <span class="ribbon-val" id="homeLiveHumidity">--</span><span class="ribbon-unit">% RH</span>
+                <span class="ribbon-status warning" id="homeHumidityStatus">No Arduino detected</span>
+              </div>
+              <!-- Live Dynamic Waveform Sparkline -->
+              <div class="ribbon-sparkline-wrap">
+                <svg class="sparkline-svg" id="sparklineHumidity" viewBox="0 0 100 24" preserveAspectRatio="none">
+                  <path class="sparkline-area" id="sparklineHumidityArea" d="M0,24 L100,24 Z" />
+                  <path class="sparkline-line" id="sparklineHumidityLine" d="M0,12 L100,12" />
+                </svg>
+              </div>
+              <div class="ribbon-tile-track">
+                <div class="ribbon-fill fill-humidity" id="homeHumidityBar" style="width: 0%;"></div>
+              </div>
+              <div class="ribbon-tile-sub" id="homeVpdSub">No Arduino detected</div>
+            </div>
+
+            <!-- Tile 5: 3 Relays Actuator Status -->
+            <div class="ribbon-tile actuators-tile" id="ribbonTileActuators">
+              <div class="ribbon-tile-top">
+                <span class="ribbon-tile-label">ACTUATOR RELAYS (ACTIVE-LOW)</span>
+                <span class="ribbon-pin-chip relay">D7, D6, D5</span>
+              </div>
+              <div class="ribbon-relays-list">
+                <div class="ribbon-relay-row" id="homeRelayRow1">
+                  <span class="relay-row-label">Pump 1 (D7):</span>
+                  <span class="relay-chip-small standby" id="homeRelay1Pill">Standby</span>
+                </div>
+                <div class="ribbon-relay-row" id="homeRelayRow2">
+                  <span class="relay-row-label">Pump 2 (D6):</span>
+                  <span class="relay-chip-small standby" id="homeRelay2Pill">Standby</span>
+                </div>
+                <div class="ribbon-relay-row" id="homeRelayRow3">
+                  <span class="relay-row-label">Pump 3 (D8/IN4):</span>
+                  <span class="relay-chip-small standby" id="homeRelay3Pill">Standby (Send '3')</span>
+                </div>
+              </div>
+              <div class="relay-flow-indicator" id="relayFlowIndicator">
+                <span class="flow-dot"></span>
+                <span id="flowRateText">Hydration Standby</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hardware Test Bench & Sensor Simulator (Collapsible) -->
+          <div class="hardware-test-bench-drawer hidden" id="hardwareTestBenchDrawer">
+            <div class="test-bench-head">
+              <div class="bench-head-left">
+                <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+                  <path d="M6 1v3H1v5h5v6h4v-6h5V4h-5V1H6z"/>
+                </svg>
+                <strong>Hardware Test Bench &amp; Sensor Calibration Simulator</strong>
+                <span class="bench-tag">Interactive Hardware Verification</span>
+              </div>
+              <div class="bench-head-right">
+                <button type="button" class="btn-bench-action" id="btnBenchReset">Reset to Live Mode</button>
+                <button type="button" class="btn-bench-action" id="btnCloseTestBench">✕ Close</button>
+              </div>
+            </div>
+
+            <div class="bench-sliders-grid">
+              <!-- Slider 1: Soil 1 ADC -->
+              <div class="bench-control-card">
+                <div class="bench-control-label-row">
+                  <span>Soil 1 ADC (Pin A0)</span>
+                  <span class="bench-val-highlight" id="benchSoil1Val">ADC 440 (72%)</span>
+                </div>
+                <input type="range" id="benchSoil1Range" min="300" max="800" value="440" class="fluent-slider bench-slider" />
+                <div class="bench-slider-scale">
+                  <span>300 (100% Wet)</span>
+                  <span style="color:#d83b01; font-weight:700;">600 (40% Trigger)</span>
+                  <span>800 (0% Dry)</span>
+                </div>
+              </div>
+
+              <!-- Slider 2: Soil 2 ADC -->
+              <div class="bench-control-card">
+                <div class="bench-control-label-row">
+                  <span>Soil 2 ADC (Pin A1)</span>
+                  <span class="bench-val-highlight" id="benchSoil2Val">ADC 460 (68%)</span>
+                </div>
+                <input type="range" id="benchSoil2Range" min="300" max="800" value="460" class="fluent-slider bench-slider" />
+                <div class="bench-slider-scale">
+                  <span>300 (100% Wet)</span>
+                  <span style="color:#d83b01; font-weight:700;">600 (40% Trigger)</span>
+                  <span>800 (0% Dry)</span>
+                </div>
+              </div>
+
+              <!-- Slider 3: Ambient Temp -->
+              <div class="bench-control-card">
+                <div class="bench-control-label-row">
+                  <span>DHT11 Canopy Temp (Pin 4)</span>
+                  <span class="bench-val-highlight" id="benchTempVal">18.6°C</span>
+                </div>
+                <input type="range" id="benchTempRange" min="10" max="40" value="18.6" step="0.5" class="fluent-slider bench-slider" />
+                <div class="bench-slider-scale">
+                  <span>10°C (Cold)</span>
+                  <span>25°C (Warm)</span>
+                  <span>40°C (Heat Stress)</span>
+                </div>
+              </div>
+
+              <!-- Slider 4: Ambient Humidity -->
+              <div class="bench-control-card">
+                <div class="bench-control-label-row">
+                  <span>DHT11 Relative Humidity (Pin 4)</span>
+                  <span class="bench-val-highlight" id="benchHumidVal">64.5% RH</span>
+                </div>
+                <input type="range" id="benchHumidRange" min="20" max="95" value="64.5" step="0.5" class="fluent-slider bench-slider" />
+                <div class="bench-slider-scale">
+                  <span>20% (Arid)</span>
+                  <span>65% (Optimal)</span>
+                  <span>95% (Condensation)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Trigger Bar -->
+            <div class="bench-quick-bar">
+              <span class="bench-bar-title">Actuator Relays Testing:</span>
+              <button type="button" class="btn-bench-pulse" id="btnBenchTrigger1">Pulse Pump 1 (D7)</button>
+              <button type="button" class="btn-bench-pulse" id="btnBenchTrigger2">Pulse Pump 2 (D6)</button>
+              <button type="button" class="btn-bench-pulse highlight" id="btnBenchTrigger3">⚡ Send '3' (Pump 3 / Relay IN4)</button>
+              <span class="bench-status-note" id="benchStatusNote">Relays: Active-LOW (LOW=ON, HIGH=OFF) • 3s Run / 3s Cooldown</span>
+            </div>
+
+            <!-- Hardware Sensor Anti-Fake Diagnostics & Calibration Bar -->
+            <div class="bench-quick-bar" style="margin-top: 10px; background: rgba(0, 120, 212, 0.05); border: 1px solid rgba(0, 120, 212, 0.18); border-radius: 6px; padding: 8px 12px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span class="bench-bar-title" style="color: #0078d4; font-weight: 700;">Anti-Fake Sensor Calibration:</span>
+              <span class="bench-val-highlight" id="benchLiveRawAdc1" style="font-size: 11px; padding: 3px 8px; background: #eef3fc; border-radius: 4px; border: 1px solid #c7d8f5;">A0 (Soil 1): --</span>
+              <span class="bench-val-highlight" id="benchLiveRawAdc2" style="font-size: 11px; padding: 3px 8px; background: #eef3fc; border-radius: 4px; border: 1px solid #c7d8f5;">A1 (Soil 2): --</span>
+              <button type="button" class="btn-bench-pulse" id="btnBenchCalibInfo" title="Query Live Hardware ADC &amp; Ranges">🎯 Check ADC ('C')</button>
+              <button type="button" class="btn-bench-pulse" id="btnBenchCalibDry" title="Calibrate current sensor reading as 0% Dry">🏜️ Set Dry 0% ('D')</button>
+              <button type="button" class="btn-bench-pulse" id="btnBenchCalibWet" title="Calibrate current sensor reading as 100% Wet">💧 Set Wet 100% ('W')</button>
+              <button type="button" class="btn-bench-pulse" id="btnBenchCalibReset" title="Reset to standard 800/300 calibration">↺ Reset Defaults ('R')</button>
+            </div>
+          </div>
+
+          <!-- Subtle Productivity Keyboard Shortcuts Hint Bar -->
+          <div class="ribbon-shortcuts-hint">
+            <span class="shortcut-chip"><kbd>T</kbd> Dark/Light</span>
+            <span class="shortcut-chip"><kbd>M</kbd> Precision Monitor</span>
+            <span class="shortcut-chip"><kbd>1</kbd>/<kbd>2</kbd>/<kbd>3</kbd> Manual Pumps</span>
+            <span class="shortcut-chip"><kbd>S</kbd> Sync Data</span>
+            <span class="shortcut-chip"><kbd>B</kbd> Test Bench</span>
+            <span class="shortcut-chip"><kbd>Esc</kbd> Close</span>
+          </div>
+        </div>
+
+        <!-- Content Grid (2 Columns: Main Section + Right Sidebar) -->
+        <div class="main-content-layout">
+          <!-- Left Main Column -->
+          <div class="primary-column">
+
+            <!-- Plant Growth Stages Section (Replaces Screenshots) -->
+            <section class="card-section growth-stages-card" id="plantGrowthStagesSection">
+              <div class="growth-stages-header">
+                <div class="stages-header-titles">
+                  <div class="stages-badge-row">
+                    <span class="stages-kicker">PHENOLOGICAL PROGRESSION</span>
+                    <span class="stages-cycle-badge" id="stagesCycleBadge">4 Stages · 100 Day Cycle</span>
+                  </div>
+                  <h3 class="section-title" id="stagesSectionTitle">Growth Stages of Potato</h3>
+                  <p class="stages-subtitle" id="stagesSubtitle">
+                    Photographic development across critical growth milestones. Click any stage card to enlarge high-resolution imagery and inspect stage-specific agronomic parameters.
+                  </p>
+                </div>
+                
+                <!-- Quick Stage Filter Pills -->
+                <div class="stage-nav-pills" id="stageNavPills">
+                  <button type="button" class="stage-pill active" data-stage="all">All 4 Stages</button>
+                  <button type="button" class="stage-pill" data-stage="1">Stage 1: Emergence</button>
+                  <button type="button" class="stage-pill" data-stage="2">Stage 2: Canopy</button>
+                  <button type="button" class="stage-pill" data-stage="3">Stage 3: Flowering</button>
+                  <button type="button" class="stage-pill" data-stage="4">Stage 4: Maturity</button>
+                </div>
+              </div>
+
+              <!-- Growth Stages Interactive Deck -->
+              <div class="growth-stages-deck" id="growthStagesDeck">
+                <!-- Dynamically injected by renderGrowthStages() in app.js -->
+              </div>
+            </section>
+
+            <!-- Description Card -->
+            <section class="card-section content-card">
+              <h3 class="card-title">Crop Overview & Cultivation Guide</h3>
+              <p class="description-text" id="mainDescriptionText">
+                Potatoes thrive in cool, porous soil. Soil moisture below 60% during tuber initiation causes irregular knobbing and reduced tuber count, while saturation (>85%) causes blackheart and soft rot (Erwinia).
+              </p>
+            </section>
+
+            <!-- Ratings & Reviews Section -->
+            
+
+            <!-- Features Card -->
+            <section class="card-section content-card features-card">
+              <h3 class="card-title">Calibrated Sensor Parameters & Thresholds</h3>
+              <ul class="features-list" id="featuresList">
+                <li>
+                  <span class="feature-bullet"></span>
+                  <span class="feature-text">Rhizosphere capacitive sensor depth 10–15cm inside bulking zone.</span>
+                </li>
+                <li>
+                  <span class="feature-bullet"></span>
+                  <span class="feature-text">Automated pulse irrigation threshold: ON &lt; 65%, OFF &gt; 80%.</span>
+                </li>
+                <li>
+                  <span class="feature-bullet"></span>
+                  <span class="feature-text">Stolon hooking and tuber enlargement cycle tracking.</span>
+                </li>
+              </ul>
+            </section>
+
+            <!-- Additional Details Footer Info -->
+            <section class="card-section content-card details-card">
+              <h3 class="card-title">Additional agricultural information</h3>
+              <div class="details-grid">
+                <div class="detail-item">
+                  <span class="detail-label">Published by</span>
+                  <span class="detail-value">PlantoAnalytica Agricultural Extension</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Category</span>
+                  <span class="detail-value" id="detailCategory">Root & Tuber Crop</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Soil pH Range</span>
+                  <span class="detail-value" id="detailSoilPh">5.2 – 6.2 (Optimal 5.8)</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Sunlight Requirements</span>
+                  <span class="detail-value" id="detailSunlight">6+ hrs direct sun</span>
+                </div>
+              </div>
+            </section>
+
+          </div>
+
+          <!-- Right Sidebar: Discover More Section (Shows Fields Details & Other Crops) -->
+          <aside class="sidebar-column">
+            <div class="discover-more-card">
+              <div class="discover-header" id="discoverHeaderBtn" title="View all fields in Fields tab">
+                <h3 class="discover-title">Discover more</h3>
+                <span class="discover-chevron">›</span>
+              </div>
+
+              <!-- Segmented tabs: Fields (Default) vs Other Crops -->
+              <div class="discover-tabs-nav">
+                <button type="button" class="discover-tab-btn active" id="tabDiscoverFields" data-tab="fields">
+                  <span>Fields</span>
+                  <span class="discover-count-badge" id="discoverFieldsCount">2 / 2</span>
+                </button>
+                <button type="button" class="discover-tab-btn" id="tabDiscoverCrops" data-tab="crops">
+                  <span>Other Crops</span>
+                </button>
+              </div>
+
+              <!-- Dynamically populated with Fields Details or Other Crops -->
+              <div class="apps-list" id="discoverMoreList">
+                <!-- Javascript will render fields detail or other crops here -->
+              </div>
+
+              <!-- Quick Action Footer -->
+              <div class="discover-footer-action" id="discoverFooterAction">
+                <button type="button" class="btn-discover-manage" id="btnManageFieldsSidebar">
+                  <svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor">
+                    <path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2z"/>
+                  </svg>
+                  <span>Add or Manage Fields</span>
+                </button>
+              </div>
+            </div>
+          </aside>
+        </div>
+        </div>
+        <!-- End Plant Detail View (Home) -->
+
+        <!-- Plants Gallery View (Plants Tab) -->
+        <div class="view-pane" id="plantsGalleryView">
+          <div class="plants-gallery-container">
+            <!-- Gallery Header -->
+            <div class="gallery-header-row">
+              <h1 class="gallery-main-title">Foundation Crops Catalog</h1>
+              <p class="gallery-main-subtitle">Select any crop card to load full precision telemetry, vegetative thresholds, and agronomic guidance.</p>
+            </div>
+
+            <!-- Shelf 1: Top Foundation Crops -->
+            <section class="store-shelf-section">
+              <div class="shelf-header">
+                <div class="shelf-title-wrap">
+                  <h2 class="shelf-title">Top Foundation Crops</h2>
+                  <span class="shelf-chevron">›</span>
+                </div>
+              </div>
+              <div class="shelf-track" id="shelf1Track">
+                <!-- Crop cards rendered dynamically -->
+              </div>
+            </section>
+
+            <!-- Shelf 2: Medicinal & Aromatic Herbs -->
+            <section class="store-shelf-section">
+              <div class="shelf-header">
+                <div class="shelf-title-wrap">
+                  <h2 class="shelf-title">Medicinal & Aromatic Herbs</h2>
+                  <span class="shelf-chevron">›</span>
+                </div>
+              </div>
+              <div class="shelf-track" id="shelf2Track">
+                <!-- Herbal cards rendered dynamically -->
+              </div>
+            </section>
+
+            <!-- Shelf 3: All 10 Foundation Crops Grid -->
+            <section class="store-shelf-section">
+              <div class="shelf-header">
+                <div class="shelf-title-wrap">
+                  <h2 class="shelf-title">All Calibrated Foundation Crops (10)</h2>
+                  <span class="shelf-chevron">›</span>
+                </div>
+              </div>
+              <div class="store-cards-grid" id="allCropsGrid">
+                <!-- All 10 cards rendered dynamically -->
+              </div>
+            </section>
+          </div>
+        </div>
+        <!-- End Plants Gallery View -->
+
+        <!-- Crop Detail View (Opened Exclusively from Foundation Crops Catalog - Pure Detail, Zero Monitoring Options) -->
+        <div class="view-pane" id="cropDetailView">
+          <div class="crop-detail-container">
+            
+            <!-- Top Breadcrumb & Back Bar -->
+            <div class="crop-detail-topbar">
+              <button type="button" class="btn-back-to-catalog" id="btnBackToCatalog">
+                <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+                  <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                </svg>
+                <span>Back to Foundation Crops Catalog</span>
+              </button>
+              <div class="crop-detail-breadcrumb">
+                <span>Foundation Crops Catalog</span>
+                <span class="bc-sep">/</span>
+                <span id="cropDetailBreadcrumbName">Potato</span>
+                <span class="crop-catalog-badge">Botanical Profile</span>
+              </div>
+            </div>
+
+            <!-- Crop Detail Hero Banner -->
+            <div class="crop-detail-hero" id="cropDetailHero">
+              <div class="crop-detail-identity-row">
+                <div class="crop-detail-icon-box">
+                  <img src="assets/plants/potato.jpg" alt="Crop Profile" class="crop-detail-img" id="cdHeroImg" />
+                </div>
+                <div class="crop-detail-meta">
+                  <h1 class="crop-detail-title" id="cdHeroTitle">Potato</h1>
+                  <div class="crop-detail-species-row">
+                    <span class="crop-detail-species" id="cdHeroSpecies">Solanum tuberosum</span>
+                    <span class="meta-pipe">|</span>
+                    <span class="crop-detail-cat-pill" id="cdHeroCategory">Root &amp; Tuber Crop</span>
+                  </div>
+                  <div class="crop-detail-rating-row">
+                    <span class="rating-score" id="cdHeroRatingScore">4.8</span>
+                    <span class="rating-star">★</span>
+                    <span class="rating-count" id="cdHeroRatingCount">12.4K agronomist ratings</span>
+                    <span class="meta-pipe">|</span>
+                    <span style="font-size:12.5px; color:var(--win-text-secondary);" id="cdHeroCycle">Growth Cycle: 100 days</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Agronomic Reference Specs (Static Reference Targets - Zero Monitoring Options) -->
+              <div class="crop-detail-specs-grid">
+                <div class="crop-spec-tile">
+                  <div class="crop-spec-label">Optimal Moisture</div>
+                  <div class="crop-spec-val" style="color:#0078D4;" id="cdSpecMoisture">65% – 78%</div>
+                  <div class="crop-spec-hint">Rhizosphere capacity</div>
+                </div>
+                <div class="crop-spec-tile">
+                  <div class="crop-spec-label">Optimal Temperature</div>
+                  <div class="crop-spec-val" style="color:#dc2626;" id="cdSpecTemp">16°C – 22°C</div>
+                  <div class="crop-spec-hint">Canopy vegetative</div>
+                </div>
+                <div class="crop-spec-tile">
+                  <div class="crop-spec-label">Growth Cycle</div>
+                  <div class="crop-spec-val" style="color:#107c41;" id="cdSpecCycle">100 Days</div>
+                  <div class="crop-spec-hint">Seed to harvest</div>
+                </div>
+                <div class="crop-spec-tile">
+                  <div class="crop-spec-label">Soil pH Range</div>
+                  <div class="crop-spec-val" style="color:#b45309;" id="cdSpecSoilPh">5.2 – 6.2</div>
+                  <div class="crop-spec-hint">Optimal 5.8</div>
+                </div>
+                <div class="crop-spec-tile">
+                  <div class="crop-spec-label">Daily Sunlight</div>
+                  <div class="crop-spec-val" style="color:#4338ca;" id="cdSpecSunlight">6+ hrs direct</div>
+                  <div class="crop-spec-hint">Full photoperiod</div>
+                </div>
+              </div>
+
+              <!-- Tagline / Summary -->
+              <p class="crop-detail-tagline" id="cdHeroTagline">
+                Potatoes thrive in cool, porous soil. Soil moisture below 60% during tuber initiation causes irregular knobbing and reduced tuber count.
+              </p>
+
+              <!-- Actions: Assign to Field OR Return to Catalog (Zero Monitoring Options) -->
+              <div class="crop-detail-actions-row">
+                <button type="button" class="btn-primary btn-plant-in-field" id="btnCdPlantInField" style="padding: 9px 20px; font-size: 13.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">
+                  <svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor">
+                    <path d="M8 0a.5.5 0 0 1 .5.5v15a.5.5 0 0 1-1 0V.5A.5.5 0 0 1 8 0z"/>
+                    <path d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1H1.5A.5.5 0 0 1 1 8z"/>
+                  </svg>
+                  <span>Assign Crop to a Field</span>
+                </button>
+                <button type="button" class="btn-subtle" id="btnCdBackToCatalog2" style="padding: 9px 18px; font-size: 13px;">
+                  <span>Browse More Crops</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Main Content Layout (2 columns: Details on Left, Other Crops on Right) -->
+            <div class="crop-detail-content-row">
+              <div class="crop-detail-main-col">
+                
+                <!-- Phenological Progression / Growth Stages -->
+                <section class="card-section content-card">
+                  <div class="stages-header-card">
+                    <div class="stages-header-left">
+                      <div class="stages-badge-row">
+                        <span class="stages-kicker">PHENOLOGICAL PROGRESSION</span>
+                        <span class="stages-cycle-badge" id="cdStagesCycleBadge">4 Stages · 100 Day Cycle</span>
+                      </div>
+                      <h3 class="section-title" id="cdStagesTitle">Growth Stages</h3>
+                      <p class="stages-subtitle">
+                        Photographic development across critical growth milestones and stage-specific agronomic parameters.
+                      </p>
+                    </div>
+                    <div class="stage-nav-pills" id="cdStageNavPills">
+                      <button type="button" class="stage-pill active" data-cdstage="all">All 4 Stages</button>
+                      <button type="button" class="stage-pill" data-cdstage="1">Stage 1</button>
+                      <button type="button" class="stage-pill" data-cdstage="2">Stage 2</button>
+                      <button type="button" class="stage-pill" data-cdstage="3">Stage 3</button>
+                      <button type="button" class="stage-pill" data-cdstage="4">Stage 4</button>
+                    </div>
+                  </div>
+                  <div class="growth-stages-deck" id="cdGrowthStagesDeck">
+                    <!-- Injected dynamically by renderCropDetail -->
+                  </div>
+                </section>
+
+                <!-- Crop Overview & Cultivation Guide -->
+                <section class="card-section content-card">
+                  <h3 class="card-title">Crop Overview &amp; Cultivation Guide</h3>
+                  <p class="description-text" id="cdDescriptionText"></p>
+                </section>
+
+                <!-- Botanical Thresholds & Cultivation Parameters -->
+                <section class="card-section content-card features-card">
+                  <h3 class="card-title">Botanical Thresholds &amp; Cultivation Parameters</h3>
+                  <ul class="features-list" id="cdFeaturesList"></ul>
+                </section>
+
+                <!-- Additional Agricultural Information -->
+                <section class="card-section content-card details-card">
+                  <h3 class="card-title">Botanical &amp; Agricultural Taxonomy</h3>
+                  <div class="details-grid">
+                    <div class="detail-item">
+                      <span class="detail-label">Published by</span>
+                      <span class="detail-value">PlantoAnalytica Botanical Extension</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Category</span>
+                      <span class="detail-value" id="cdDetailCategory">Root &amp; Tuber Crop</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Soil pH Range</span>
+                      <span class="detail-value" id="cdDetailSoilPh">5.2 – 6.2</span>
+                    </div>
+                    <div class="detail-item">
+                      <span class="detail-label">Sunlight Requirements</span>
+                      <span class="detail-value" id="cdDetailSunlight">6+ hrs direct sun</span>
+                    </div>
+                  </div>
+                </section>
+
+              </div>
+
+              <!-- Right Column: Other Catalog Crops -->
+              <aside class="sidebar-column">
+                <div class="discover-more-card">
+                  <div class="discover-header">
+                    <h3 class="discover-title">Other Foundation Crops</h3>
+                  </div>
+                  <div class="apps-list" id="cdOtherCropsList">
+                    <!-- Injected dynamically -->
+                  </div>
+                </div>
+              </aside>
+
+            </div>
+
+          </div>
+        </div>
+        <!-- End Crop Detail View -->
+
+        <!-- Fields View (Fields Tab) -->
+        <div class="view-pane" id="fieldsView">
+          <div class="fields-view-container">
+            <!-- Header -->
+            <div class="fields-header-row">
+              <div>
+                <h1 class="fields-main-title">Field Management & Precision Plots</h1>
+                <p class="fields-main-subtitle">Complete telemetric overview, rhizosphere monitoring parameters, and foundation crop allocation per agricultural parcel.</p>
+              </div>
+              <div class="fields-hw-capacity-badge" id="fieldsHwCapacityBadge">
+                <span class="hw-badge-dot"></span>
+                <span id="fieldsCapacityText">Hardware Allocation: 2 / 2 Soil Sensors In Use (Max 2 Fields)</span>
+              </div>
+            </div>
+
+            <!-- List of Full-Width Field Details Cards -->
+            <div class="fields-cards-list" id="fieldsCardsList">
+              <!-- Dynamically populated with complete field details -->
+            </div>
+
+            <!-- Full-Width Card: Add New Field -->
+            <div class="field-card-full add-field-card" id="addFieldCard">
+              <div class="add-field-header">
+                <div class="add-field-icon-badge">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                </div>
+                <div>
+                  <h2 class="add-field-title" id="addFieldCardTitle">Add New Field Plot</h2>
+                  <p class="add-field-subtitle" id="addFieldCardSubtitle">Register a new greenhouse bay, open acreage, or hydroponic container to track distinct microclimates.</p>
+                </div>
+              </div>
+
+              <!-- Hardware Capacity Limit Notice (Shown when 2 fields are active) -->
+              <div class="field-limit-notice-box hidden" id="fieldHwLimitBanner">
+                <div class="limit-notice-icon">
+                  <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                </div>
+                <div class="limit-notice-content">
+                  <div class="limit-notice-title-row">
+                    <h4 class="limit-notice-heading">Hardware Capacity Reached (2 / 2 Fields Active)</h4>
+                    <span class="limit-badge-max">2 Soil Probes Max</span>
+                  </div>
+                  <p class="limit-notice-p">Your physical Arduino Uno smart gardening controller has exactly <strong>two analog soil moisture sensor inputs (Pin A0 &amp; Pin A1)</strong> and <strong>two automated relay channels (Pin 7 &amp; Pin 6)</strong>. Both channels are currently assigned to active field parcels:</p>
+                  <div class="limit-channels-list" id="limitChannelsList">
+                    <!-- Populated dynamically in app.js -->
+                  </div>
+                  <p class="limit-sub-hint">To add a new agricultural parcel or recalibrate a zone, please delete or edit one of your existing active fields above.</p>
+                </div>
+              </div>
+
+              <form class="add-field-form" id="newFieldForm">
+                <div class="add-field-grid">
+                  <div class="form-field-group">
+                    <label for="newFieldName" class="form-field-label">Field Name *</label>
+                    <input type="text" id="newFieldName" class="form-field-input" placeholder="e.g. Field Beta, Polyhouse 2..." required />
+                  </div>
+
+                  <div class="form-field-group">
+                    <label for="newFieldCrop" class="form-field-label">Assigned Crop *</label>
+                    <select id="newFieldCrop" class="form-field-select" required>
+                      <!-- Options will be populated dynamically from PLANTS_DATA -->
+                    </select>
+                  </div>
+
+                  <div class="form-field-group">
+                    <label for="newFieldAcreage" class="form-field-label">Plot Size / Acreage</label>
+                    <input type="text" id="newFieldAcreage" class="form-field-input" placeholder="e.g. 2.4 Acres, 800 sq. m" value="2.0 Acres" />
+                  </div>
+
+                  <div class="form-field-group">
+                    <label for="newFieldSoil" class="form-field-label">Substrate / Soil Type</label>
+                    <select id="newFieldSoil" class="form-field-select">
+                      <option value="Porous Sandy Loam">Porous Sandy Loam</option>
+                      <option value="Rich Organic Clay Loam">Rich Organic Clay Loam</option>
+                      <option value="Perlite & Peat Moss">Perlite & Peat Moss (Hydroponic)</option>
+                      <option value="Well-Aerated Silt Loam">Well-Aerated Silt Loam</option>
+                      <option value="Coco Coir & Pumice">Coco Coir & Pumice</option>
+                    </select>
+                  </div>
+
+                  <div class="form-field-group">
+                    <label for="newFieldIrrigation" class="form-field-label">Irrigation System</label>
+                    <select id="newFieldIrrigation" class="form-field-select">
+                      <option value="Automated Pulse Drip">Automated Pulse Drip (Rhizosphere)</option>
+                      <option value="Micro-Sprinkler Overhead">Micro-Sprinkler Overhead</option>
+                      <option value="Hydroponic NFT Closed-Loop">Hydroponic NFT Closed-Loop</option>
+                      <option value="Sub-Surface Soak & Dry">Sub-Surface Soak & Dry</option>
+                    </select>
+                  </div>
+
+                  <div class="form-field-group">
+                    <label for="newFieldSensors" class="form-field-label">Capacitive Sensor Depth</label>
+                    <input type="text" id="newFieldSensors" class="form-field-input" placeholder="e.g. 10–15cm Depth" value="10–15cm Depth" />
+                  </div>
+                </div>
+
+                <!-- Arduino Sensor & Actuator Selection (Smart Gardening Controller) -->
+                <div class="field-sensor-section">
+                  <div class="form-section-title-wrap">
+                    <div class="section-title-row">
+                      <div class="arduino-icon-tag">
+                        <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+                          <circle cx="5" cy="8" r="2"/>
+                          <circle cx="11" cy="8" r="2"/>
+                          <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                        </svg>
+                        <span>Arduino Smart Gardening Hardware (9600 Baud)</span>
+                      </div>
+                      <span class="section-hint">Select the sensors and relays installed in this field plot</span>
+                    </div>
+                  </div>
+
+                  <!-- Hardware Presets Bar -->
+                  <div class="sensor-preset-bar" id="sensorPresetBar">
+                    <span class="preset-label">Probe Allocation:</span>
+                    <button type="button" class="btn-sensor-preset active" data-preset="soil1">Probe 1 (A0 + Pump 1 + DHT11)</button>
+                    <button type="button" class="btn-sensor-preset" data-preset="soil2">Probe 2 (A1 + Pump 2 + DHT11)</button>
+                    <button type="button" class="btn-sensor-preset" data-preset="dual-soil">Dual Probes (A0 + A1 + Both Pumps)</button>
+                    <button type="button" class="btn-sensor-preset" data-preset="custom">Custom</button>
+                  </div>
+
+                  <!-- Sensor Choice Cards Grid -->
+                  <div class="sensor-selection-title">Microclimate & Rhizosphere Sensors:</div>
+                  <div class="sensor-selection-cards-grid">
+                    <!-- Sensor 1 -->
+                    <label class="sensor-choice-card selected" for="sensorCheckSoil1">
+                      <input type="checkbox" id="sensorCheckSoil1" class="sensor-choice-input" value="soil1" checked />
+                      <div class="sensor-choice-content">
+                        <div class="sensor-choice-top">
+                          <span class="sensor-choice-name">Soil Moisture Sensor 1</span>
+                          <span class="pin-badge pin-analog">Pin A0</span>
+                        </div>
+                        <p class="sensor-choice-desc">Upper Rhizosphere (0–15cm). Calibrated 300 (wet) to 800 (dry). Triggers Pump 1.</p>
+                      </div>
+                    </label>
+
+                    <!-- Sensor 2 -->
+                    <label class="sensor-choice-card selected" for="sensorCheckSoil2">
+                      <input type="checkbox" id="sensorCheckSoil2" class="sensor-choice-input" value="soil2" checked />
+                      <div class="sensor-choice-content">
+                        <div class="sensor-choice-top">
+                          <span class="sensor-choice-name">Soil Moisture Sensor 2</span>
+                          <span class="pin-badge pin-analog">Pin A1</span>
+                        </div>
+                        <p class="sensor-choice-desc">Deep Taproot (15–30cm). Calibrated 300 (wet) to 800 (dry). Triggers Pump 2.</p>
+                      </div>
+                    </label>
+
+                    <!-- Sensor 3 (DHT11) -->
+                    <label class="sensor-choice-card selected" for="sensorCheckDHT11">
+                      <input type="checkbox" id="sensorCheckDHT11" class="sensor-choice-input" value="dht11" checked />
+                      <div class="sensor-choice-content">
+                        <div class="sensor-choice-top">
+                          <span class="sensor-choice-name">DHT11 Temp &amp; Humidity</span>
+                          <span class="pin-badge pin-digital">Pin 4</span>
+                        </div>
+                        <p class="sensor-choice-desc">Canopy atmosphere, ambient temperature, relative humidity &amp; VPD index.</p>
+                      </div>
+                    </label>
+                  </div>
+
+                  <!-- Actuator Relays Grid -->
+                  <div class="sensor-selection-title" style="margin-top: 14px;">Relay Actuator Pumps (Active-LOW Logic):</div>
+                  <div class="relay-selection-cards-grid">
+                    <!-- Pump 1 -->
+                    <label class="sensor-choice-card selected" for="pumpCheck1">
+                      <input type="checkbox" id="pumpCheck1" class="sensor-choice-input" value="pump1" checked />
+                      <div class="sensor-choice-content">
+                        <div class="sensor-choice-top">
+                          <span class="sensor-choice-name">Pump 1 (Zone 1 Auto-Pulse)</span>
+                          <span class="pin-badge pin-relay">Relay Pin 7</span>
+                        </div>
+                        <p class="sensor-choice-desc">Automated pulse for Soil 1 when moisture &lt; threshold. 3s run / 3s cooldown.</p>
+                      </div>
+                    </label>
+
+                    <!-- Pump 2 -->
+                    <label class="sensor-choice-card selected" for="pumpCheck2">
+                      <input type="checkbox" id="pumpCheck2" class="sensor-choice-input" value="pump2" checked />
+                      <div class="sensor-choice-content">
+                        <div class="sensor-choice-top">
+                          <span class="sensor-choice-name">Pump 2 (Zone 2 Auto-Pulse)</span>
+                          <span class="pin-badge pin-relay">Relay Pin 6</span>
+                        </div>
+                        <p class="sensor-choice-desc">Automated pulse for Soil 2 when moisture &lt; threshold. 3s run / 3s cooldown.</p>
+                      </div>
+                    </label>
+
+                    <!-- Pump 3 -->
+                    <label class="sensor-choice-card selected" for="pumpCheck3">
+                      <input type="checkbox" id="pumpCheck3" class="sensor-choice-input" value="pump3" checked />
+                      <div class="sensor-choice-content">
+                        <div class="sensor-choice-top">
+                          <span class="sensor-choice-name">Pump 3 (Manual Override Valve)</span>
+                          <span class="pin-badge pin-relay">Relay Pin 8</span>
+                        </div>
+                        <p class="sensor-choice-desc">Triggered when Serial receives character '3'. 3s run / 3s cooldown.</p>
+                      </div>
+                    </label>
+                  </div>
+
+                  <!-- Calibration Settings -->
+                  <div class="calibration-settings-row">
+                    <div class="form-field-group" style="flex: 1;">
+                      <label for="newFieldThreshold" class="form-field-label">Moisture Auto-Trigger Threshold</label>
+                      <div class="threshold-slider-wrap">
+                        <input type="range" id="newFieldThreshold" min="20" max="60" value="40" step="5" class="fluent-slider" />
+                        <span id="newFieldThresholdVal" class="threshold-val-badge">40%</span>
+                      </div>
+                    </div>
+
+                    <div class="form-field-group" style="flex: 1.2;">
+                      <label class="form-field-label">Hardware Controller Parameters</label>
+                      <div class="hardware-timing-specs">
+                        <span class="timing-chip">Baud: <strong>9600</strong></span>
+                        <span class="timing-chip">Cycle: <strong>5000ms</strong></span>
+                        <span class="timing-chip">Run: <strong>3000ms</strong></span>
+                        <span class="timing-chip">Cooldown: <strong>3000ms</strong></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="add-field-actions">
+                  <button type="submit" class="btn-primary-large" id="btnSubmitNewField">
+                    <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
+                      <path d="M8 2a.75.75 0 0 1 .75.75v4.5h4.5a.75.75 0 0 1 0 1.5h-4.5v4.5a.75.75 0 0 1-1.5 0v-4.5h-4.5a.75.75 0 0 1 0-1.5h4.5v-4.5A.75.75 0 0 1 8 2z"/>
+                    </svg>
+                    <span>Register Field Plot</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+        <!-- End Fields View -->
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Field Setup Modal (Acrylic Blur Pop-up) -->
+  <div class="onboarding-overlay hidden" id="onboardingModal" aria-modal="true" role="dialog">
+    <div class="onboarding-card">
+      <button class="modal-close-btn" id="onboardingCloseBtn" title="Close" style="position:absolute; top:18px; right:18px; width:32px; height:32px; border-radius:50%; border:none; background:rgba(0,0,0,0.06); cursor:pointer; font-size:16px; line-height:1; display:flex; align-items:center; justify-content:center; z-index:10; transition:background 0.2s;">✕</button>
+
+      <!-- Field & Substrate Specifications Form -->
+      <div class="onboarding-step active" id="onboardingStep1">
+        <div class="onboarding-step-badge">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+            <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+          </svg>
+          <span>Field &amp; Substrate Specifications</span>
+        </div>
+        <div class="onboarding-title-row">
+          <div>
+            <h2 class="onboarding-title" id="onboardingModalMainTitle">Add Agricultural Field</h2>
+            <p class="onboarding-subtitle">
+              Enter your field's plot specifications, substrate type, and irrigation system to calibrate sensor telemetry.
+            </p>
+          </div>
+          <!-- Existing Fields Switch Pill (Visible only if fields exist) -->
+          <div class="onboarding-mode-switch hidden" id="onboardingModeSwitch">
+            <button type="button" class="mode-pill active" id="modeBtnNewField">+ New Field</button>
+            <button type="button" class="mode-pill" id="modeBtnSelectField">Choose Existing</button>
+          </div>
+        </div>
+
+        <!-- Optional: Existing Fields Grid (When choosing existing) -->
+        <div class="onboarding-field-selection-grid hidden" id="onboardingFieldGrid">
+          <!-- Populated dynamically with Field Alpha & Field Beta if choosing existing -->
+        </div>
+
+        <!-- Form: All Field Details -->
+        <div class="onboarding-form-wrap" id="onboardingFormWrap">
+          <div class="onboarding-form-grid">
+            <div class="fluent-form-group">
+              <label for="fieldNameInput" class="fluent-input-label">Field Name <span class="required-star">*</span></label>
+              <input 
+                type="text" 
+                id="fieldNameInput" 
+                class="fluent-field-input" 
+                placeholder="e.g. Field Alpha, Polyhouse 1, North Vineyard..." 
+                autocomplete="off" 
+                spellcheck="false" 
+                required
+              />
+              <span class="field-input-error" id="fieldNameError">Please provide a name for this field.</span>
+            </div>
+
+            <div class="fluent-form-group">
+              <label for="fieldLocationInput" class="fluent-input-label">Zone / Parcel Location</label>
+              <input 
+                type="text" 
+                id="fieldLocationInput" 
+                class="fluent-field-input" 
+                placeholder="e.g. Zone Alpha • Commercial Parcel" 
+                value="Zone Alpha • Commercial Parcel"
+                autocomplete="off" 
+                spellcheck="false" 
+              />
+            </div>
+
+            <div class="fluent-form-group">
+              <label for="fieldAcreageInput" class="fluent-input-label">Plot Size / Acreage</label>
+              <input 
+                type="text" 
+                id="fieldAcreageInput" 
+                class="fluent-field-input" 
+                placeholder="e.g. 2.4 Acres, 800 sq. m" 
+                value="2.4 Acres" 
+                autocomplete="off"
+              />
+            </div>
+
+            <div class="fluent-form-group">
+              <label for="fieldSoilSelect" class="fluent-input-label">Substrate / Soil Type</label>
+              <select id="fieldSoilSelect" class="fluent-field-select">
+                <option value="Porous Sandy Loam" selected>Porous Sandy Loam</option>
+                <option value="Rich Organic Clay Loam">Rich Organic Clay Loam</option>
+                <option value="Perlite &amp; Peat Moss">Perlite &amp; Peat Moss (Hydroponic)</option>
+                <option value="Well-Aerated Silt Loam">Well-Aerated Silt Loam</option>
+                <option value="Coco Coir &amp; Pumice">Coco Coir &amp; Pumice</option>
+              </select>
+            </div>
+
+            <div class="fluent-form-group">
+              <label for="fieldIrrigationSelect" class="fluent-input-label">Irrigation System</label>
+              <select id="fieldIrrigationSelect" class="fluent-field-select">
+                <option value="Automated Pulse Drip" selected>Automated Pulse Drip (Rhizosphere)</option>
+                <option value="Micro-Sprinkler Overhead">Micro-Sprinkler Overhead</option>
+                <option value="Hydroponic NFT Closed-Loop">Hydroponic NFT Closed-Loop</option>
+                <option value="Sub-Surface Soak &amp; Dry">Sub-Surface Soak &amp; Dry</option>
+              </select>
+            </div>
+
+            <div class="fluent-form-group">
+              <label for="fieldDepthInput" class="fluent-input-label">Capacitive Sensor Depth</label>
+              <input 
+                type="text" 
+                id="fieldDepthInput" 
+                class="fluent-field-input" 
+                placeholder="e.g. 10–15cm Depth" 
+                value="10–15cm Depth" 
+                autocomplete="off"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="step-actions onboarding-actions-row">
+          <div class="step-hints">
+            <span class="step-hint-badge">Arduino Ready</span>
+            <span class="step-hint-text">Calibrates soil dielectric curve &amp; irrigation thresholds.</span>
+          </div>
+          <button type="button" class="btn-primary-large" id="btnSaveField">
+            <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
+              <path fill-rule="evenodd" d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+            </svg>
+            <span id="btnSaveFieldText">Save Field Specifications</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Live Sensor Monitor Modal (Full-Window Minimalist Precision Monitor) -->
+  <div class="sensor-monitor-modal full-window-mode" id="sensorMonitorModal" aria-hidden="true">
+    <div class="sensor-monitor-window full-window">
+      
+      <!-- Sleek Minimal Header Bar -->
+      <div class="sensor-window-bar">
+        <div class="sensor-bar-left">
+          <div class="sensor-live-pill">
+            <span class="pulse-dot"></span>
+            <span class="live-label" id="sensorStreamTime">Live Telemetry</span>
+          </div>
+          <div class="sensor-bar-sep"></div>
+          <div class="sensor-meta-context">
+            <strong class="sensor-crop-title" id="sensorCropIdentity">Potato (Solanum tuberosum)</strong>
+            <span class="sensor-meta-bullet">•</span>
+            <span class="sensor-parcel-name" id="sensorFieldPlot">Field Alpha · Zone A</span>
+            <span class="sensor-meta-bullet">•</span>
+            <span class="sensor-node-tag" id="sensorNodeId">Node #04</span>
+          </div>
+        </div>
+
+        <div class="sensor-window-controls">
+          <button type="button" class="btn-tool-pill" id="btnModalConnectUsb" title="Connect Arduino Uno via Web Serial (9600 baud)">
+            <span class="arduino-status-dot simulated" id="modalArduinoDot"></span>
+            <span id="modalArduinoBtnText">Connect USB Serial</span>
+          </button>
+          
+          <div class="wrapper35">
+            <button type="button" class="btn-icon-minimal" id="btnToggleSerialConsole" title="Toggle Arduino Serial Monitor Terminal">
+              <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                <path d="M4 4.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
+              </svg>
+            </button>
+            <button type="button" class="btn-icon-minimal" id="btnRefreshSensors" title="Refresh Telemetry">
+              <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+                <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+              </svg>
+            </button>
+            <button type="button" class="btn-close-minimal" id="closeSensorModalBtn" title="Close Window (Esc)">✕</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Body Container: Centered, Breathable, High-End Workstation -->
+      <div class="sensor-window-scroll-body">
+        <div class="sensor-dashboard-content">
+
+          <!-- Section 1: The Arduino 4-Sensor Quad Grid -->
+          <div class="sensor-quad-grid" id="sensorQuadGrid">
+            
+            <!-- Sensor 1: Soil Moisture 1 (Pin A0) -->
+            <div class="sensor-card-minimal" id="sensorCardMoisture1">
+              <div class="sensor-card-head">
+                <div class="sensor-kind-left">
+                  <span class="sensor-kind-label">SOIL MOISTURE 1</span>
+                  <span class="sensor-pin-chip">Pin A0</span>
+                </div>
+                <span class="status-pill-subtle" id="moist1StatusTag">No Arduino detected</span>
+              </div>
+              <div class="sensor-reading-line">
+                <span class="sensor-number" id="liveMoistVal">--</span>
+                <span class="sensor-unit">%</span>
+                <span class="sensor-delta-chip" id="moistTrendChip">No Arduino detected</span>
+              </div>
+              <div class="sensor-track-wrap">
+                <div class="sensor-track-bar">
+                  <div class="sensor-track-fill fill-moisture" id="moistGaugeFill" style="width: 0%;"></div>
+                </div>
+                <div class="sensor-track-meta">
+                  <span id="targetMoistRangeLabel">Target: 65%–80%</span>
+                  <span>Threshold: <strong>&lt; 40% (Pump 1)</strong></span>
+                </div>
+              </div>
+              <div class="sensor-submetrics">
+                <div class="submetric-col">
+                  <span class="submetric-lbl">Upper Root (0–15cm)</span>
+                  <strong class="submetric-num" id="depthMoistTop">--</strong>
+                </div>
+                <div class="submetric-col">
+                  <span class="submetric-lbl">Relay Channel (Auto &amp; Manual)</span>
+                  <strong class="submetric-num" style="color:#0078D4;">Pump 1 (Pin 7)</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sensor 2: Soil Moisture 2 (Pin A1) -->
+            <div class="sensor-card-minimal" id="sensorCardMoisture2">
+              <div class="sensor-card-head">
+                <div class="sensor-kind-left">
+                  <span class="sensor-kind-label">SOIL MOISTURE 2</span>
+                  <span class="sensor-pin-chip">Pin A1</span>
+                </div>
+                <span class="status-pill-subtle" id="moist2StatusTag">No Arduino detected</span>
+              </div>
+              <div class="sensor-reading-line">
+                <span class="sensor-number" id="liveSoil2Val">--</span>
+                <span class="sensor-unit">%</span>
+                <span class="sensor-delta-chip" id="soil2TrendChip">No Arduino detected</span>
+              </div>
+              <div class="sensor-track-wrap">
+                <div class="sensor-track-bar">
+                  <div class="sensor-track-fill fill-moisture" id="soil2GaugeFill" style="width: 0%;"></div>
+                </div>
+                <div class="sensor-track-meta">
+                  <span>Deep Taproot Calibrated</span>
+                  <span>Threshold: <strong>&lt; 40% (Pump 2)</strong></span>
+                </div>
+              </div>
+              <div class="sensor-submetrics">
+                <div class="submetric-col">
+                  <span class="submetric-lbl">Deep Taproot (15–30cm)</span>
+                  <strong class="submetric-num" id="depthMoistDeep">--</strong>
+                </div>
+                <div class="submetric-col">
+                  <span class="submetric-lbl">Relay Channel (Auto &amp; Manual)</span>
+                  <strong class="submetric-num" style="color:#0078D4;">Pump 2 (Pin 6)</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sensor 3: Humidity (DHT11 Pin 4) -->
+            <div class="sensor-card-minimal" id="sensorCardHumidity">
+              <div class="sensor-card-head">
+                <div class="sensor-kind-left">
+                  <span class="sensor-kind-label">CANOPY HUMIDITY</span>
+                  <span class="sensor-pin-chip pin-dht">DHT11 Pin 4</span>
+                </div>
+                <span class="status-pill-subtle" id="humidityStatusTag">No Arduino detected</span>
+              </div>
+              <div class="sensor-reading-line">
+                <span class="sensor-number" id="liveHumidityVal">--</span>
+                <span class="sensor-unit">% RH</span>
+                <span class="sensor-delta-chip" id="humidityTrendChip">No Arduino detected</span>
+              </div>
+              <div class="sensor-track-wrap">
+                <div class="sensor-track-bar">
+                  <div class="sensor-track-fill fill-humidity" id="humidityGaugeFill" style="width: 0%;"></div>
+                </div>
+                <div class="sensor-track-meta">
+                  <span id="targetHumidityRangeLabel">Target: 60%–75% RH</span>
+                  <span>Digital Hygrometer</span>
+                </div>
+              </div>
+              <div class="sensor-submetrics">
+                <div class="submetric-col">
+                  <span class="submetric-lbl">Vapor Pressure Deficit</span>
+                  <strong class="submetric-num" id="liveVpdVal">-- kPa</strong>
+                </div>
+                <div class="submetric-col">
+                  <span class="submetric-lbl">Dew Point</span>
+                  <strong class="submetric-num" id="liveDewPoint">--°C</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sensor 4: Temperature (DHT11 Pin 4) -->
+            <div class="sensor-card-minimal" id="sensorCardTemp">
+              <div class="sensor-card-head">
+                <div class="sensor-kind-left">
+                  <span class="sensor-kind-label">CANOPY & ROOT TEMP</span>
+                  <span class="sensor-pin-chip pin-dht">DHT11 Pin 4</span>
+                </div>
+                <span class="status-pill-subtle" id="tempStatusTag">No Arduino detected</span>
+              </div>
+              <div class="sensor-reading-line">
+                <span class="sensor-number" id="liveTempVal">--</span>
+                <span class="sensor-unit">°C</span>
+                <span class="sensor-delta-chip" id="tempTrendChip">No Arduino detected</span>
+              </div>
+              <div class="sensor-track-wrap">
+                <div class="sensor-track-bar">
+                  <div class="sensor-track-fill fill-temp" id="tempGaugeFill" style="width: 0%;"></div>
+                </div>
+                <div class="sensor-track-meta">
+                  <span id="targetTempRangeLabel">Optimal: 15°C–20°C</span>
+                  <span>Precision Sensor</span>
+                </div>
+              </div>
+              <div class="sensor-submetrics">
+                <div class="submetric-col">
+                  <span class="submetric-lbl">Substrate Core</span>
+                  <strong class="submetric-num" id="tempSoilCore">--</strong>
+                </div>
+                <div class="submetric-col">
+                  <span class="submetric-lbl">Air Canopy</span>
+                  <strong class="submetric-num" id="tempCanopy">--</strong>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Section 1.5: Arduino Actuator Relays Station (3 Pumps) -->
+          <div class="arduino-relays-card" id="arduinoRelaysCard">
+            <div class="relays-card-header">
+              <div class="relays-header-left">
+                <div class="relay-station-badge">
+                  <span class="pulse-dot" style="background:#0078D4; box-shadow: 0 0 6px rgba(0, 120, 212, 0.8);"></span>
+                  <span>ARDUINO RELAY ACTUATORS STATION</span>
+                </div>
+                <span class="relays-header-desc">3-Channel Active-LOW Controller • Pins 7, 6, 5 • 3s Run / 3s Cooldown</span>
+              </div>
+              <div class="relays-header-right">
+                <span class="hardware-mode-tag" id="arduinoModeTag">Mode: No Arduino detected</span>
+              </div>
+            </div>
+
+            <div class="relays-grid">
+              <!-- Pump 1 -->
+              <div class="relay-tile" id="relayTilePump1">
+                <div class="relay-tile-head">
+                  <div class="relay-tile-title">
+                    <span class="relay-pin-label">Pin 7</span>
+                    <strong>Pump 1 (Zone 1)</strong>
+                  </div>
+                  <span class="relay-state-pill standby" id="pump1StatePill">Standby</span>
+                </div>
+                <div class="relay-mode-badges">
+                  <span class="relay-mode-badge auto" title="Automatic threshold: Auto-dispenses when Soil 1 < 40%">Auto (&lt;40%)</span>
+                  <span class="relay-mode-badge manual" title="Manual override: Click to turn on immediately">Manual</span>
+                </div>
+                <p class="relay-tile-meta">Dual Mode: Auto threshold (&lt;40%) &amp; manual pulse (Send '1')</p>
+                <div class="relay-timing-bar">
+                  <div class="relay-timing-fill" id="pump1TimingFill"></div>
+                </div>
+                <button type="button" class="btn-trigger-pump btn-trigger-pump1" id="btnTriggerPump1">
+                  <svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor">
+                    <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.089z"/>
+                  </svg>
+                  <span id="btnTriggerPump1Text">⚡ Trigger Manual Pump 1 (Send '1')</span>
+                </button>
+              </div>
+
+              <!-- Pump 2 -->
+              <div class="relay-tile" id="relayTilePump2">
+                <div class="relay-tile-head">
+                  <div class="relay-tile-title">
+                    <span class="relay-pin-label">Pin 6</span>
+                    <strong>Pump 2 (Zone 2)</strong>
+                  </div>
+                  <span class="relay-state-pill standby" id="pump2StatePill">Standby</span>
+                </div>
+                <div class="relay-mode-badges">
+                  <span class="relay-mode-badge auto" title="Automatic threshold: Auto-dispenses when Soil 2 < 40%">Auto (&lt;40%)</span>
+                  <span class="relay-mode-badge manual" title="Manual override: Click to turn on immediately">Manual</span>
+                </div>
+                <p class="relay-tile-meta">Dual Mode: Auto threshold (&lt;40%) &amp; manual pulse (Send '2')</p>
+                <div class="relay-timing-bar">
+                  <div class="relay-timing-fill" id="pump2TimingFill"></div>
+                </div>
+                <button type="button" class="btn-trigger-pump btn-trigger-pump2" id="btnTriggerPump2">
+                  <svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor">
+                    <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.089z"/>
+                  </svg>
+                  <span id="btnTriggerPump2Text">⚡ Trigger Manual Pump 2 (Send '2')</span>
+                </button>
+              </div>
+
+              <!-- Pump 3 (Manual Override) -->
+              <div class="relay-tile manual-tile" id="relayTilePump3">
+                <div class="relay-tile-head">
+                  <div class="relay-tile-title">
+                    <span class="relay-pin-label">Pin 8</span>
+                    <strong>Pump 3 (Manual Valve)</strong>
+                  </div>
+                  <span class="relay-state-pill standby" id="pump3StatePill">Standby</span>
+                </div>
+                <div class="relay-mode-badges">
+                  <span class="relay-mode-badge manual" title="Dedicated manual override valve">Manual Only</span>
+                </div>
+                <p class="relay-tile-meta">Manual Override: Digital Pin 8 • Serial character '3' (3000ms)</p>
+                <div class="relay-timing-bar">
+                  <div class="relay-timing-fill" id="pump3TimingFill"></div>
+                </div>
+                <button type="button" class="btn-trigger-pump btn-trigger-pump3" id="btnTriggerPump3">
+                  <svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor">
+                    <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.089z"/>
+                  </svg>
+                  <span id="btnTriggerPump3Text">⚡ Trigger Manual Pump 3 (Send '3')</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: Live Video & Next Step Grid -->
+          <div class="sensor-lower-grid">
+
+            <!-- Card A: Live Mobile Optical Stream (Connected via USB) -->
+            <div class="sensor-card-minimal live-camera-card" id="liveCameraCard">
+              <div class="sensor-card-head">
+                <div class="camera-head-left">
+                  <span class="sensor-kind-label">LIVE CANOPY OPTICS</span>
+                  <span class="usb-tether-pill" title="Mobile phone connected via USB charging cable">
+                    <svg viewBox="0 0 16 16" width="11" height="11" fill="currentColor">
+                      <path d="M6 .5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4H6v-4zM4 6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2.5a.5.5 0 0 1-1 0V6a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h1v1H6a2 2 0 0 1-2-2V6zm5 7.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2z"/>
+                    </svg>
+                    <span>USB Mobile Cam</span>
+                  </span>
+                </div>
+                <span class="status-pill-subtle optimal" id="cameraStatusPill">
+                  <span class="cam-rec-dot"></span>
+                  <span id="camStatusText">Live Feed</span>
+                </span>
+              </div>
+
+              <!-- Viewport -->
+              <div class="live-video-viewport" id="videoViewport">
+                <video id="plantLiveCamVideo" autoplay playsinline muted></video>
+                
+                <!-- Fallback / Initial Connection Screen -->
+                <div class="camera-fallback-screen" id="cameraFallbackScreen">
+                  <img src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=80" alt="Plant Optical Telemetry" class="simulated-feed-img" id="simulatedFeedImg">
+                  <div class="simulated-scanline"></div>
+                  <div class="camera-prompt-overlay" id="cameraPromptOverlay">
+                    <button type="button" class="btn-connect-cam-pill" id="btnConnectRealCam">
+                      <svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor">
+                        <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 7.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 13.828 5H14a1 1 0 0 1 1 1v6z"/>
+                        <path d="M8 11a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm0 1a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
+                      </svg>
+                      <span>Start Mobile USB Stream</span>
+                    </button>
+                    <span class="cam-hint">Phone plugged via charging USB cable</span>
+                  </div>
+                </div>
+
+                <!-- HUD Overlays -->
+                <div class="video-hud-overlay">
+                  <div class="hud-top-row">
+                    <span class="hud-chip"><span class="hud-red-dot"></span> USB-C · 1080p 60fps</span>
+                    <span class="hud-chip mono" id="videoHudTimestamp">14:16:35</span>
+                  </div>
+                  <div class="hud-bottom-row">
+                    <span class="hud-chip ai-chip">Foliage Integrity: 98% (Healthy)</span>
+                    <span class="hud-chip zoom-chip">1.0x Optic</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Camera Controls Bar -->
+              <div class="camera-controls-row">
+                <div class="cam-select-wrap">
+                  <select class="cam-select-input" id="camDeviceSelect" title="Select Video Input Device">
+                    <option value="">Detecting USB Cameras...</option>
+                  </select>
+                </div>
+                <div class="cam-buttons-right">
+                  <button type="button" class="btn-tool-cam" id="btnToggleCamStream" title="Pause or resume video">
+                    <span id="btnToggleCamText">Pause</span>
+                  </button>
+                  <button type="button" class="btn-tool-cam" id="btnSnapPhoto" title="Capture foliage frame snapshot">
+                    <span>Snapshot</span>
+                  </button>
+                  <button type="button" class="btn-tool-cam" id="btnFullscreenCam" title="Toggle Fullscreen View">
+                    <span>⛶</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card B: Realtime Field Meteorology (Ultra-Minimalist Windows 11 Fluent Card) -->
+            <div class="next-step-minimal-card weather-monitor-card" id="activeNextStepCard">
+              <!-- Minimal Header -->
+              <div class="next-step-card-header">
+                <div class="next-step-badge-strip">
+                  <span class="kicker-tag" id="stepPriorityTag">FIELD METEOROLOGY</span>
+                  <span class="eta-pill weather-loc-pill" id="nextStepWeatherLocation" title="Active location • Click to use device GPS or change PIN">📍 Agra, Uttar Pradesh</span>
+                </div>
+                <div class="minimal-live-tag">
+                  <span class="weather-live-dot"></span>
+                  <span id="nextStepWeatherProvider">Google Weather</span>
+                </div>
+              </div>
+
+              <!-- Manual PIN Code Input Option -->
+              <div class="minimal-pincode-bar">
+                <div class="pincode-input-wrap">
+                  <span class="pincode-input-icon">📮</span>
+                  <input type="text" id="inputManualPincode" class="input-pincode-field" placeholder="Enter PIN code (e.g. 282002)" maxlength="8" autocomplete="postal-code" />
+                  <button type="button" class="btn-pincode-apply" id="btnApplyPincode">Apply PIN</button>
+                </div>
+                <button type="button" class="btn-subtle-minimal btn-gps-quick" id="btnAutoDetectGps" title="Use device GPS to get current location">
+                  <span class="btn-gps-icon">📍</span>
+                  <span id="btnDetectGpsText">Use GPS</span>
+                </button>
+              </div>
+
+              <!-- Minimalist Weather Hero -->
+              <div class="minimal-weather-hero">
+                <div class="minimal-weather-primary">
+                  <div class="minimal-icon-box">
+                    <img class="minimal-weather-icon" id="nextStepWeatherIcon" src="https://maps.gstatic.com/weather/v1/mostly_cloudy_night.svg" alt="Live Weather" />
+                    <span class="modal-weather-emoji-fallback" id="nextStepWeatherEmoji" style="display: none;">⛅</span>
+                  </div>
+                  <div class="minimal-temp-block">
+                    <span class="minimal-weather-temp" id="nextStepWeatherTemp">25.1°C</span>
+                    <span class="minimal-feels-text" id="nextStepWeatherFeels">Feels 28.4°C</span>
+                  </div>
+                  <div class="minimal-cond-block">
+                    <span class="minimal-condition-text" id="nextStepWeatherCondition">Mostly Cloudy</span>
+                    <span class="minimal-agronomic-note" id="nextStepWeatherNarrative">Transpiration: Low • Moisture Stable</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 4 Clean Minimal Telemetry Chips -->
+              <div class="minimal-chips-grid">
+                <div class="minimal-metric-chip" title="Atmospheric Relative Humidity &amp; Dew Point">
+                  <span class="chip-label">Humidity</span>
+                  <span class="chip-val highlight" id="nextStepHumidity">💧 96% RH</span>
+                  <span class="chip-sub" id="nextStepDewPoint">Dew: 24.4°C</span>
+                </div>
+                <div class="minimal-metric-chip" title="Wind Velocity &amp; Vector">
+                  <span class="chip-label">Wind</span>
+                  <span class="chip-val" id="nextStepWind">💨 6.0 km/h NW</span>
+                  <span class="chip-sub" id="nextStepGust">Gust: 11 km/h</span>
+                </div>
+                <div class="minimal-metric-chip" title="Precipitation Probability &amp; Rain Rate">
+                  <span class="chip-label">Precipitation</span>
+                  <span class="chip-val" id="nextStepPrecip">🌧️ 10% Rain</span>
+                  <span class="chip-sub" id="nextStepQpf">0.0 mm/h</span>
+                </div>
+                <div class="minimal-metric-chip" title="Barometric Pressure &amp; Cloud Cover">
+                  <span class="chip-label">Pressure</span>
+                  <span class="chip-val" id="nextStepPressure">🧭 1008 hPa</span>
+                  <span class="chip-sub" id="nextStepUv">Cloud: 77%</span>
+                </div>
+              </div>
+
+              <!-- Minimal Footer Action Strip -->
+              <div class="minimal-card-footer">
+                <div class="minimal-footer-status" id="modalWeatherStatusBadge">
+                  <span class="dot-green"></span>
+                  <span id="modalWeatherStatusText">Google Weather API • Synced</span>
+                </div>
+                <button type="button" class="btn-minimal-sync" id="btnSyncWeatherModal" title="Sync live radar telemetry">
+                  <svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                  </svg>
+                  <span id="btnSyncWeatherModalText">Sync Weather</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Section 3: Arduino Live Serial Monitor / Terminal Drawer -->
+          <div class="arduino-serial-drawer" id="arduinoSerialDrawer">
+            <div class="serial-drawer-head">
+              <div class="serial-head-left">
+                <span class="terminal-prompt-icon">&gt;_</span>
+                <span class="serial-drawer-title">Microcontroller Console &amp; Serial Monitor</span>
+                <span class="serial-baud-badge">9600 Baud • 8-N-1</span>
+                <span class="serial-status-tag" id="serialConnectionStatus">No Connection Detected</span>
+              </div>
+              <div class="serial-head-right">
+                <button type="button" class="btn-serial-tool primary btn-bt-tool" id="btnConnectBluetoothDirect" title="Connect directly via HC-02 Bluetooth (BLE UART)">
+                  <svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor">
+                    <path d="m8.5 7.5-2.25-2.25.707-.707L8.5 6.086V2.5a.5.5 0 0 1 .854-.354l3.5 3.5a.5.5 0 0 1 0 .708L9.5 9.707v1.586l3.354 3.354a.5.5 0 0 1 0 .708l-3.5 3.5A.5.5 0 0 1 8.5 18.5v-3.586l-1.543 1.543-.707-.707L8.5 13.5v-6zm1-3.293v3.586l1.793-1.793L9.5 4.207zm0 12.586 1.793-1.793L9.5 13.207v3.586z"/>
+                  </svg>
+                  <span id="btnConnectBluetoothDirectText">Connect Bluetooth</span>
+                </button>
+                <button type="button" class="btn-serial-tool" id="btnConnectSerialDirect" title="Connect via USB or Bluetooth COM port">
+                  <svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor">
+                    <path d="M6 .5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4H6v-4zM4 6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2.5a.5.5 0 0 1-1 0V6a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h1v1H6a2 2 0 0 1-2-2V6zm5 7.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2z"/>
+                  </svg>
+                  <span id="btnConnectSerialDirectText">Connect USB/COM</span>
+                </button>
+                <button type="button" class="btn-serial-tool" id="btnDrawerWiringGuide" title="View HC-02 6-pin wiring schematics and Arduino firmware">Wiring &amp; Code</button>
+                <button type="button" class="btn-serial-tool" id="btnClearSerialLog">Clear Log</button>
+              </div>
+            </div>
+
+            <div class="serial-terminal-body" id="serialTerminalBody">
+              <pre class="serial-log-output" id="serialLogOutput">Smart gardening system starting...
+HC-02 Bluetooth active on D2(RX)/D3(TX) • 9600 Baud
+Pumps: Pump 1(D7 auto/man), Pump 2(D6 auto/man), Pump 3(D8 MANUAL ONLY)
+Commands: '1'=Pump1 | '2'=Pump2 | '3'=Pump3 | 'A'=Auto ON | 'M'=Manual Only | '0'/'X'=Stop All</pre>
+            </div>
+
+            <div class="serial-command-bar">
+              <span class="serial-input-prompt">TX &gt;</span>
+              <input type="text" id="serialCustomInput" class="serial-input-field" placeholder="Send command to Arduino (e.g. '1', '2', '3', 'A', 'M', 'X')..." maxlength="32" autocomplete="off" />
+              <button type="button" class="btn-serial-send" id="btnSendSerialText">Send</button>
+              <button type="button" class="btn-serial-quick-cmd" id="btnQuickSend1" title="Trigger Pump 1 (ASCII '1')">⚡ '1' (Pump 1)</button>
+              <button type="button" class="btn-serial-quick-cmd" id="btnQuickSend2" title="Trigger Pump 2 (ASCII '2')">⚡ '2' (Pump 2)</button>
+              <button type="button" class="btn-serial-quick-cmd" id="btnQuickSend3" title="Trigger Pump 3 (ASCII '3')">⚡ '3' (Pump 3)</button>
+              <button type="button" class="btn-serial-quick-cmd" id="btnQuickSendAuto" title="Enable Automatic Mode (ASCII 'A')">🔄 'A' (Auto)</button>
+              <button type="button" class="btn-serial-quick-cmd" id="btnQuickSendManual" title="Pause Auto Mode (ASCII 'M')">🛑 'M' (Manual)</button>
+              <button type="button" class="btn-serial-quick-cmd danger" id="btnQuickSendStop" title="Emergency Stop All Pumps (ASCII 'X')">⚠️ 'X' (Stop All)</button>
+              <button type="button" class="btn-serial-quick-cmd" id="btnQuickSendStatus" title="Query Telemetry (ASCII 'S')">📊 'S' (Status)</button>
+              <button type="button" class="btn-serial-quick-cmd highlight" id="btnQuickSendCalib" title="Query Live Sensor ADC &amp; Calibration (ASCII 'C')">🎯 'C' (Calib Info)</button>
+              <button type="button" class="btn-serial-quick-cmd" id="btnQuickSendSetDry" title="Save Current Sensor Readings as Dry 0% (ASCII 'D')">🏜️ 'D' (Set Dry 0%)</button>
+              <button type="button" class="btn-serial-quick-cmd" id="btnQuickSendSetWet" title="Save Current Sensor Readings as Wet 100% (ASCII 'W')">💧 'W' (Set Wet 100%)</button>
+              <button type="button" class="btn-serial-quick-cmd" id="btnQuickSendResetCal" title="Reset Calibration to Defaults (ASCII 'R')">↺ 'R' (Reset Cal)</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Stage Inspection Lightbox Modal -->
+  <div class="lightbox-modal" id="lightboxModal" aria-hidden="true">
+    <div class="lightbox-overlay" id="lightboxOverlay"></div>
+    <div class="lightbox-container">
+      <button class="lightbox-close" id="lightboxCloseBtn">✕</button>
+      <div class="lightbox-content" id="lightboxContent"></div>
+    </div>
+  </div>
+
+  <!-- Arduino Hardware Connection Gate (Completely blurs page until Arduino is connected) -->
+  <div class="arduino-gate-overlay" id="arduinoGateOverlay" aria-modal="true" role="dialog">
+    <div class="arduino-gate-card">
+      <button type="button" class="modal-close-btn arduino-gate-close-btn" id="btnGateCloseArduino" title="Close" aria-label="Close">✕</button>
+      <div class="arduino-gate-badge">
+        <span class="gate-status-dot disconnected"></span>
+        <span>Hardware Required • No Arduino Detected</span>
+        <button type="button" class="gate-badge-close-btn" id="btnGateBadgeClose" title="Close" aria-label="Close">✕</button>
+      </div>
+
+      <div class="arduino-gate-icon-wrap">
+        <svg viewBox="0 0 52 52" width="60" height="60" fill="none" class="arduino-gate-svg">
+          <rect width="52" height="52" rx="14" fill="#008184" />
+          <rect x="7" y="18" width="38" height="24" rx="4" fill="#005C5E" stroke="#26c6da" stroke-width="1.5"/>
+          <rect x="20" y="9" width="12" height="11" rx="2" fill="#cbd5e1" stroke="#94a3b8" stroke-width="1"/>
+          <!-- Crystal Oscillator & Reset Switch -->
+          <circle cx="13" cy="24" r="2.5" fill="#f59e0b" />
+          <!-- Digital & Analog Headers -->
+          <line x1="12" y1="38" x2="40" y2="38" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 3"/>
+          <path d="M18 30 C18 26 22 26 22 30 C22 34 18 34 18 30 Z" stroke="#ffffff" stroke-width="1.8" fill="none"/>
+          <path d="M34 30 C34 26 30 26 30 30 C30 34 34 34 34 30 Z" stroke="#ffffff" stroke-width="1.8" fill="none"/>
+          <path d="M24 30h4" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M20 28v4M18 30h4" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M32 30h-4" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <h2 class="arduino-gate-title">Connect Microcontroller Hardware</h2>
+      <p class="arduino-gate-subtitle">
+        PlantoPRO connects wirelessly via <strong>HC-02 Bluetooth (BLE 4.0 / HC-05/06 compatible)</strong> or via USB Serial cable. In absence of a hardware connection, live telemetry is held in standby.
+      </p>
+
+      <div class="arduino-gate-status-banner">
+        <div class="gate-banner-dot"></div>
+        <div class="gate-banner-info">
+          <strong id="arduinoGateStatusText">No Hardware Detected</strong>
+          <span>Connect wirelessly via Bluetooth HC-02 or plug in via USB COM port.</span>
+        </div>
+      </div>
+
+      <div class="arduino-gate-actions">
+        <button type="button" class="btn-primary-large btn-gate-connect-bt" id="btnGateConnectBluetooth">
+          <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
+            <path d="m8.5 7.5-2.25-2.25.707-.707L8.5 6.086V2.5a.5.5 0 0 1 .854-.354l3.5 3.5a.5.5 0 0 1 0 .708L9.5 9.707v1.586l3.354 3.354a.5.5 0 0 1 0 .708l-3.5 3.5A.5.5 0 0 1 8.5 18.5v-3.586l-1.543 1.543-.707-.707L8.5 13.5v-6zm1-3.293v3.586l1.793-1.793L9.5 4.207zm0 12.586 1.793-1.793L9.5 13.207v3.586z"/>
+          </svg>
+          <span>Connect Wireless Bluetooth (HC-02 BLE)</span>
+        </button>
+        <button type="button" class="btn-primary-large btn-gate-connect" id="btnGateConnectArduino">
+          <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
+            <path d="M6 .5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4H6v-4zM4 6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2.5a.5.5 0 0 1-1 0V6a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h1v1H6a2 2 0 0 1-2-2V6zm5 7.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2z"/>
+          </svg>
+          <span>Connect Bluetooth COM / USB (Web Serial)</span>
+        </button>
+        <button type="button" class="btn-gate-secondary-pill" id="btnGateWiringGuide">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/></svg>
+          <span>View HC-02 Pinout, Wiring Schematics &amp; Arduino Code</span>
+        </button>
+      </div>
+
+      <div class="arduino-gate-guide">
+        <div class="gate-step-item">
+          <span class="gate-step-num">1</span>
+          <span>Wire HC-02 6-pin module (STATE&rarr;D5, RXD&rarr;D3 via 1k/2k divider, TXD&rarr;D2, GND&rarr;GND, VCC&rarr;5V)</span>
+        </div>
+        <div class="gate-step-item">
+          <span class="gate-step-num">2</span>
+          <span>Connect wirelessly via <strong>Web Bluetooth (HC-02 BLE)</strong> or pair in Windows (PIN 1234/0000) &amp; select COM port</span>
+        </div>
+        <div class="gate-step-item">
+          <span class="gate-step-num">3</span>
+          <span>Live microclimate &amp; soil moisture telemetry will unlock immediately with 3 automated irrigation pumps</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Arduino & HC-02 Bluetooth Hardware & Wiring Guide Modal -->
+  <div class="wiring-modal-backdrop" id="arduinoWiringModal" aria-hidden="true" style="display: none;">
+    <div class="wiring-modal-dialog">
+      <div class="wiring-modal-header">
+        <div class="wiring-modal-title-wrap">
+          <div class="wiring-modal-icon-badge">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="2" width="20" height="20" rx="4"></rect>
+              <line x1="6" y1="18" x2="6" y2="18.01"></line>
+              <line x1="10" y1="18" x2="10" y2="18.01"></line>
+              <line x1="14" y1="18" x2="14" y2="18.01"></line>
+              <line x1="18" y1="18" x2="18" y2="18.01"></line>
+              <circle cx="12" cy="10" r="4"></circle>
+            </svg>
+          </div>
+          <div>
+            <h3 class="wiring-modal-title">HC-02 Bluetooth &amp; Arduino Wiring Schematics</h3>
+            <p class="wiring-modal-subtitle">6-Pin HC-02 (HC-05/06 compatible) • 4-Channel Relay (IN1, IN2, IN4) • DHT11 • Dual Soil Probes</p>
+          </div>
+        </div>
+        <button type="button" class="btn-close-minimal" id="btnCloseWiringModal" title="Close">✕</button>
+      </div>
+
+      <div class="wiring-modal-body">
+        <!-- Tab Switcher -->
+        <div class="wiring-tabs">
+          <button type="button" class="wiring-tab active" id="tabWiringSchematic">Pinout &amp; Wiring Diagram</button>
+          <button type="button" class="wiring-tab" id="tabWiringCode">Complete Arduino Code (.ino)</button>
+          <button type="button" class="wiring-tab" id="tabWiringTroubleshoot">Bluetooth Pairing &amp; Setup</button>
+        </div>
+
+        <!-- Tab 1: Pinout & Wiring Diagram -->
+        <div class="wiring-tab-content active" id="contentWiringSchematic">
+          <div class="wiring-grid">
+            <div class="wiring-card">
+              <h4 class="wiring-card-title">
+                <span class="badge-accent bt">HC-02</span> 6-Pin Bluetooth Module Pinout
+              </h4>
+              <table class="wiring-table">
+                <thead>
+                  <tr>
+                    <th>HC-02 Pin</th>
+                    <th>Function</th>
+                    <th>Arduino Pin</th>
+                    <th>Connection Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>STATE</strong></td>
+                    <td>Link Status</td>
+                    <td><span class="pin-tag digital">Pin D5</span></td>
+                    <td>Input: HIGH when paired/connected, LOW when searching</td>
+                  </tr>
+                  <tr>
+                    <td><strong>RXD</strong></td>
+                    <td>Serial RX</td>
+                    <td><span class="pin-tag digital">Pin D3 (TX)</span></td>
+                    <td><strong>3.3V Logic</strong>: Use voltage divider (1kΩ from D3, 2kΩ to GND)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>TXD</strong></td>
+                    <td>Serial TX</td>
+                    <td><span class="pin-tag digital">Pin D2 (RX)</span></td>
+                    <td>Direct wire: 3.3V output safely detected as HIGH by Arduino</td>
+                  </tr>
+                  <tr>
+                    <td><strong>GND</strong></td>
+                    <td>Ground</td>
+                    <td><span class="pin-tag power">GND</span></td>
+                    <td>Common ground bus with sensors and relays</td>
+                  </tr>
+                  <tr>
+                    <td><strong>VCC</strong></td>
+                    <td>Power (5V)</td>
+                    <td><span class="pin-tag power">5V</span></td>
+                    <td>Connect to Arduino 5V rail (onboard LDO drops to 3.3V)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>EN / KEY</strong></td>
+                    <td>AT / Wake</td>
+                    <td><span class="pin-tag nc">NC</span></td>
+                    <td>Leave unconnected for transparent data transmission</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="wiring-card">
+              <h4 class="wiring-card-title">
+                <span class="badge-accent relays">ACTUATORS</span> Relays &amp; Sensor Mapping
+              </h4>
+              <table class="wiring-table">
+                <thead>
+                  <tr>
+                    <th>Device</th>
+                    <th>Channel Type</th>
+                    <th>Arduino Pin</th>
+                    <th>Operating Logic</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Pump 1 Relay (IN1)</strong></td>
+                    <td>4-Ch Board IN1 (Active-LOW)</td>
+                    <td><span class="pin-tag digital">Pin D7</span></td>
+                    <td>Auto on Soil 1 &lt; 40% &amp; Manual pulse (ASCII '1')</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Pump 2 Relay (IN2)</strong></td>
+                    <td>4-Ch Board IN2 (Active-LOW)</td>
+                    <td><span class="pin-tag digital">Pin D6</span></td>
+                    <td>Auto on Soil 2 &lt; 40% &amp; Manual pulse (ASCII '2')</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Relay Channel 3 (IN3)</strong></td>
+                    <td>4-Ch Board IN3</td>
+                    <td><span class="pin-tag nc">Unconnected</span></td>
+                    <td>Spare channel (Unassigned / Auxiliary expansion)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Pump 3 Relay (IN4)</strong></td>
+                    <td>4-Ch Board IN4 (Active-LOW)</td>
+                    <td><span class="pin-tag digital">Pin D8</span></td>
+                    <td><strong>MANUAL ONLY</strong> override valve (ASCII '3')</td>
+                  </tr>
+                  <tr>
+                    <td><strong>DHT11 Sensor</strong></td>
+                    <td>Digital 1-Wire</td>
+                    <td><span class="pin-tag digital">Pin D4</span></td>
+                    <td>Canopy Temperature (°C) &amp; Humidity (%RH)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Soil Sensor 1</strong></td>
+                    <td>Capacitive ADC</td>
+                    <td><span class="pin-tag analog">Pin A0</span></td>
+                    <td>Rhizosphere Moisture 1 (Wet: 300, Dry: 800)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Soil Sensor 2</strong></td>
+                    <td>Capacitive ADC</td>
+                    <td><span class="pin-tag analog">Pin A1</span></td>
+                    <td>Deep Taproot Moisture 2 (Wet: 300, Dry: 800)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Voltage Divider Schematic Callout -->
+          <div class="divider-callout-box">
+            <div class="callout-header">
+              <svg viewBox="0 0 16 16" width="16" height="16" fill="#0284c7"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/></svg>
+              <strong>3.3V Logic Protection (Arduino D3 TX &rarr; HC-02 RXD):</strong>
+            </div>
+            <pre class="schematic-ascii">
+[Arduino Pin D3 (5V TX)] ────[ 1kΩ Resistor ]────┬────&gt; [HC-02 Pin RXD (3.3V Input)]
+                                                 │
+                                          [ 2kΩ Resistor ]
+                                                 │
+                                              [ GND ]
+            </pre>
+            <p class="callout-note">This simple 1kΩ / 2kΩ resistor divider drops the Arduino's 5V TX output down to a safe ~3.3V for the HC-02 receiver.</p>
+          </div>
+        </div>
+
+        <!-- Tab 2: Complete Arduino Source Code -->
+        <div class="wiring-tab-content" id="contentWiringCode">
+          <div class="code-view-toolbar">
+            <span class="code-filename">arduino_fast_response.ino / planto_pro_controller.ino</span>
+            <button type="button" class="btn-copy-code" id="btnCopyArduinoCode">
+              <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>
+              <span id="btnCopyArduinoCodeText">Copy Complete Arduino Code</span>
+            </button>
+          </div>
+          <pre class="arduino-code-preview" id="arduinoCodePreview"></pre>
+        </div>
+
+        <!-- Tab 3: Troubleshooting & Bluetooth Pairing Guide -->
+        <div class="wiring-tab-content" id="contentWiringTroubleshoot">
+          <div class="troubleshoot-list">
+            <div class="troubleshoot-item">
+              <div class="troubleshoot-num">1</div>
+              <div class="troubleshoot-info">
+                <strong>Windows Bluetooth Pairing (Web Serial Bluetooth COM):</strong>
+                <p>Open Windows Settings &rarr; Bluetooth &amp; devices &rarr; Add device &rarr; Bluetooth. Select "HC-02", "HC-05", or "BT05". Enter default PIN <code>1234</code> or <code>0000</code>. Once paired, click "Connect Bluetooth COM / USB" in PlantoPRO and pick the standard Bluetooth serial port at 9600 Baud.</p>
+              </div>
+            </div>
+            <div class="troubleshoot-item">
+              <div class="troubleshoot-num">2</div>
+              <div class="troubleshoot-info">
+                <strong>Web Bluetooth BLE Connection (Direct Chrome/Edge):</strong>
+                <p>Click "Connect Wireless Bluetooth (HC-02 BLE)" directly in the browser. Select your device from the browser popup. The browser connects via BLE GATT transparent UART (Service 0xFFE0 / Char 0xFFE1) with no OS pairing needed.</p>
+              </div>
+            </div>
+            <div class="troubleshoot-item">
+              <div class="troubleshoot-num">3</div>
+              <div class="troubleshoot-info">
+                <strong>LED Indicators on HC-02:</strong>
+                <p><strong>Fast Blink:</strong> Waiting for connection. <strong>Steady Lit or Double Blink:</strong> Successfully paired and actively transmitting telemetry.</p>
+              </div>
+            </div>
+            <div class="troubleshoot-item">
+              <div class="troubleshoot-num">4</div>
+              <div class="troubleshoot-info">
+                <strong>Simultaneous USB &amp; Bluetooth Streaming:</strong>
+                <p>Because the firmware uses SoftwareSerial on Pins 2 &amp; 3 for Bluetooth and hardware Serial on Pins 0 &amp; 1 for USB, you can upload sketches and monitor USB without disconnecting the HC-02!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wiring-modal-footer">
+        <button type="button" class="btn-primary-pill" id="btnWiringModalDone">Done &amp; Return to Dashboard</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Assign Crop to Field Modal -->
+  <div class="assign-crop-modal-backdrop" id="assignCropModal" aria-hidden="true" style="display:none;">
+    <div class="assign-crop-dialog">
+      <div class="assign-dialog-header">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="assign-crop-icon-badge">🌱</div>
+          <div>
+            <h3 class="assign-dialog-title" id="assignModalTitle">Assign Crop to Field</h3>
+            <p class="assign-dialog-subtitle" id="assignModalSubtitle">Choose which agricultural plot to plant this crop into</p>
+          </div>
+        </div>
+        <button type="button" class="btn-close-minimal" id="btnCloseAssignModal">✕</button>
+      </div>
+      <div class="assign-dialog-body" id="assignFieldsList">
+        <!-- Rendered dynamically -->
+      </div>
+      <div class="assign-dialog-footer">
+        <button type="button" class="btn-ghost-pill" id="btnCancelAssignCrop">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="win11-toast" id="winToast">
+    <div class="toast-icon">✓</div>
+    <div class="toast-body">
+      <div class="toast-title" id="toastTitle">Notification</div>
+      <div class="toast-message" id="toastMessage">Action completed</div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
